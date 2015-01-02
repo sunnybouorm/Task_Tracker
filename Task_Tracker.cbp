@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Task_Tracker" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Task_Tracker" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Task_Tracker" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="application/source" />
+					<Add directory="application" />
+					<Add directory="application/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add directory="application/include" />
+					<Add directory="application/source" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="application/include/Category.h" />
+		<Unit filename="application/include/Category_Manager.h" />
+		<Unit filename="application/include/Core.h" />
+		<Unit filename="application/include/DEBUG.h" />
+		<Unit filename="application/include/File_IO.h" />
+		<Unit filename="application/include/Link.h" />
+		<Unit filename="application/include/Link_Manager.h" />
+		<Unit filename="application/include/Node.h" />
+		<Unit filename="application/include/Node_Manager.h" />
+		<Unit filename="application/include/Node_Manager.hxx" />
+		<Unit filename="application/include/Task.h" />
+		<Unit filename="application/include/Task_Manager.h" />
+		<Unit filename="application/source/Category.cpp" />
+		<Unit filename="application/source/Category_Manager.cpp" />
+		<Unit filename="application/source/Core.cpp" />
+		<Unit filename="application/source/File_IO.cpp" />
+		<Unit filename="application/source/Link.cpp" />
+		<Unit filename="application/source/Link_manager.cpp" />
+		<Unit filename="application/source/Node.cpp" />
+		<Unit filename="application/source/Task.cpp" />
+		<Unit filename="application/source/Task_Manager.cpp" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

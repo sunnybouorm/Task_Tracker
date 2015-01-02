@@ -1,0 +1,136 @@
+# depslib dependency file v1.0
+1419998637 source:c:\users\sunny\documents\codeblocks\task_tracker\application\source\category.cpp
+	"Category.h"
+
+1419739102 c:\users\sunny\documents\codeblocks\task_tracker\application\include\category.h
+	<iostream>
+	<vector>
+	"Node.h"
+
+1419820593 c:\users\sunny\documents\codeblocks\task_tracker\application\include\node.h
+	<iostream>
+	<vector>
+
+1419998645 source:c:\users\sunny\documents\codeblocks\task_tracker\application\source\category_manager.cpp
+	"Category_Manager.h"
+
+1419832538 c:\users\sunny\documents\codeblocks\task_tracker\application\include\category_manager.h
+	<map>
+	<vector>
+	<iostream>
+	"Node_Manager.h"
+
+1420001349 c:\users\sunny\documents\codeblocks\task_tracker\application\include\node_manager.h
+	<map>
+	<vector>
+	<iostream>
+	"Link_Manager.h"
+	"Node_Manager.hxx"
+
+1419843180 c:\users\sunny\documents\codeblocks\task_tracker\application\include\link_manager.h
+	<map>
+	"Link.h"
+
+1419831645 c:\users\sunny\documents\codeblocks\task_tracker\application\include\link.h
+	<vector>
+	"stdint.h"
+	"Task.h"
+	"Category.h"
+
+1419899917 c:\users\sunny\documents\codeblocks\task_tracker\application\include\task.h
+	<iostream>
+	<vector>
+	"Node.h"
+
+1420165344 c:\users\sunny\documents\codeblocks\task_tracker\application\include\node_manager.hxx
+	"Node_Manager.h"
+
+1419998656 source:c:\users\sunny\documents\codeblocks\task_tracker\application\source\core.cpp
+	"Core.h"
+
+1420198860 c:\users\sunny\documents\codeblocks\task_tracker\application\include\core.h
+	"Task.h"
+	<chrono>
+
+1420201185 source:c:\users\sunny\documents\codeblocks\task_tracker\application\source\file_io.cpp
+	<iostream>
+	<fstream>
+	"File_IO.h"
+	"DEBUG.h"
+
+1420200082 c:\users\sunny\documents\codeblocks\task_tracker\application\include\file_io.h
+	<iostream>
+	<vector>
+
+1419919103 c:\users\sunny\documents\codeblocks\task_tracker\application\include\debug.h
+
+1419998690 source:c:\users\sunny\documents\codeblocks\task_tracker\application\source\link.cpp
+	<iostream>
+	"stdint.h"
+	"Link.h"
+
+1419998690 source:c:\users\sunny\documents\codeblocks\task_tracker\application\source\link_manager.cpp
+	<iostream>
+	"Link_Manager.h"
+
+1419998690 source:c:\users\sunny\documents\codeblocks\task_tracker\application\source\node.cpp
+	"Node.h"
+
+1419998690 source:c:\users\sunny\documents\codeblocks\task_tracker\application\source\task.cpp
+	"Task.h"
+
+1419998690 source:c:\users\sunny\documents\codeblocks\task_tracker\application\source\task_manager.cpp
+	"Task_Manager.h"
+
+1419834865 c:\users\sunny\documents\codeblocks\task_tracker\application\include\task_manager.h
+	<vector>
+	<iostream>
+	<map>
+	"Node_Manager.h"
+
+1420001793 source:c:\users\sunny\documents\codeblocks\task_tracker\application\test\main.cpp
+	"catch.hpp"
+
+1420123166 source:c:\users\sunny\documents\codeblocks\task_tracker\application\test\task_test.cpp
+	"catch.hpp"
+	<vector>
+	"Task_Manager.h"
+	<iostream>
+
+1420162866 source:c:\users\sunny\documents\codeblocks\task_tracker\application\test\category_test.cpp
+	"catch.hpp"
+	<vector>
+	"Category_Manager.h"
+	<iostream>
+
+1420198842 source:c:\users\sunny\documents\codeblocks\task_tracker\application\test\core_test.cpp
+	"catch.hpp"
+	<vector>
+	<iostream>
+	<stdlib.h>
+	<stdio.h>
+	<time.h>
+	<unistd.h>
+	<dos.h>
+	<windows.h>
+	"TEST_CASE_DEBUG_FILE.h"
+	"Core.h"
+	"Task_Manager.h"
+
+1420201129 source:c:\users\sunny\documents\codeblocks\task_tracker\application\test\file_io_test.cpp
+	"catch.hpp"
+	<vector>
+	<iostream>
+	"File_IO.h"
+	"Task_Manager.h"
+	"Category_Manager.h"
+
+1420197481 source:c:\users\sunny\documents\codeblocks\task_tracker\application\test\link_test.cpp
+	"catch.hpp"
+	<vector>
+	"Task_Manager.h"
+	"Category_Manager.h"
+	"Link_Manager.h"
+
+1420198866 c:\users\sunny\documents\codeblocks\task_tracker\application\test\test_case_debug_file.h
+

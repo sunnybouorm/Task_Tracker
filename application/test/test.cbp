@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="test" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="../include" />
+					<Add directory="../source" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="../include/Category.h" />
+		<Unit filename="../include/Category_Manager.h" />
+		<Unit filename="../include/Core.h" />
+		<Unit filename="../include/DEBUG.h" />
+		<Unit filename="../include/File_IO.h" />
+		<Unit filename="../include/Link.h" />
+		<Unit filename="../include/Link_Manager.h" />
+		<Unit filename="../include/Node.h" />
+		<Unit filename="../include/Node_Manager.h" />
+		<Unit filename="../include/Node_Manager.hxx" />
+		<Unit filename="../include/Task.h" />
+		<Unit filename="../include/Task_Manager.h" />
+		<Unit filename="../source/Category.cpp" />
+		<Unit filename="../source/Category_Manager.cpp" />
+		<Unit filename="../source/Core.cpp" />
+		<Unit filename="../source/File_IO.cpp" />
+		<Unit filename="../source/Link.cpp" />
+		<Unit filename="../source/Link_manager.cpp" />
+		<Unit filename="../source/Node.cpp" />
+		<Unit filename="../source/Task.cpp" />
+		<Unit filename="../source/Task_Manager.cpp" />
+		<Unit filename="Category_Test.cpp" />
+		<Unit filename="Core_Test.cpp" />
+		<Unit filename="File_IO_Test.cpp" />
+		<Unit filename="Link_Test.cpp" />
+		<Unit filename="TEST_CASE_DEBUG_FILE.h" />
+		<Unit filename="Task_Test.cpp" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
