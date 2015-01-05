@@ -15,7 +15,7 @@ using namespace std;
 uint16_t Link_Manager::generate_LID(void){
     //iterate through LIDs starting from 1 until a unique LID is found
     uint16_t LID = 1;
-    uint16_t uint32_max = -1;
+    const uint16_t uint32_max = -1;
     if(Links.empty()){
         LID = 1;
         return LID;
@@ -35,10 +35,10 @@ uint16_t Link_Manager::generate_LID(void){
  * returns true if a link exists, false otherwise
  */
 bool Link_Manager::is_Linked(Task &tr, Category &cr){
-    vector<uint16_t> trLIDs = tr.get_LIDs();
-    vector<uint16_t> crLIDs = cr.get_LIDs();
+    const vector<uint16_t> trLIDs = tr.get_LIDs();
+    const vector<uint16_t> crLIDs = cr.get_LIDs();
 
-    for(auto& trkey : trLIDs){
+    for(const auto& trkey : trLIDs){
         for(auto crkey : crLIDs){
             if (trkey == crkey){
                 return true;
@@ -95,7 +95,9 @@ bool Link_Manager::link(Task *tp, Category *cp){
  * Creates a link between specified task and category objects.
  * returns bool <0=pass>, <1=fail>
  */
-bool Link_Manager::link(std::vector<Task*> tps, std::vector<Category*> cps){
+bool Link_Manager::link(const std::vector<Task*> tps,
+    const std::vector<Category*> cps)
+{
     bool status = 0;
     for(auto tp : tps){
       for(auto cp : cps){
@@ -108,11 +110,11 @@ bool Link_Manager::link(std::vector<Task*> tps, std::vector<Category*> cps){
 /*
  * Destroys a single link by its LID and removes LID from associated Nodes
  */
-void Link_Manager::destroy(uint16_t LID){
+void Link_Manager::destroy(const uint16_t LID){
     //remove LID from associated nodes
-    auto it = Links.find(LID);
+    const auto it = Links.find(LID);
     if(it != Links.end()){
-        Link &link = it->second;
+        const Link &link = it->second;
         Task &task = *(link.nodes.first);
         task.delete_LID(LID);
         Category &category = *(link.nodes.second);
@@ -125,7 +127,7 @@ void Link_Manager::destroy(uint16_t LID){
 /*
  * Destroys links with matching LIDs and removes LIDs from associated Nodes
  */
-void Link_Manager::destroy(std::vector<uint16_t> LIDs){
+void Link_Manager::destroy(const std::vector<uint16_t> LIDs){
     for(auto& LID : LIDs){
         destroy(LID);
     }

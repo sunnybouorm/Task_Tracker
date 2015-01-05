@@ -24,15 +24,15 @@ public :
 
     //modifiers
     bool link(Task *tp, Category *cp);//creates a link between two objects
-    bool link(std::vector<Task*> tps, std::vector<Category*> cps);
+    bool link(const std::vector<Task*> tps, const std::vector<Category*> cps);
 
     bool unlink(Task *tp, Category *cp);
     bool unlink(std::vector<Task*> tps, std::vector<Category*> cps);
     template<typename T>
     void unlink(T* node);//unlinks all LIDs from node
 
-    void destroy(uint16_t LID);//destroys a single link by LID
-    void destroy(std::vector<uint16_t> LIDs);//destorys multiple links by LID
+    void destroy(const uint16_t LID);//destroys a single link by LID
+    void destroy(const std::vector<uint16_t> LIDs);//destorys multiple links by LID
 };
 
 /*
@@ -41,7 +41,7 @@ public :
  * objects.
  */
 template<typename T> void Link_Manager::unlink(T* node){
-    std::vector<uint16_t> LIDs = node->get_LIDs();
+    const std::vector<uint16_t> LIDs = node->get_LIDs();
     destroy(LIDs);
 };
 

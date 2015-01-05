@@ -6,12 +6,15 @@
 #include <vector>
 #include <iostream>
 
+#include "OS.h"
 #include <stdlib.h> //for using the function sleep
+#ifdef WINDOWS
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
 #include <dos.h>
 #include <windows.h>
+#endif // WINDOWS
 
 #include "TEST_CASE_DEBUG_FILE.h"
 #include "Core.h"

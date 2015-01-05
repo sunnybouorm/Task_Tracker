@@ -12,19 +12,32 @@
 
 #include<iostream>
 #include<vector>
+#include<map>
 
-const std::string META_FN = "task.meta";
+#include <fstream>
+
+const std::string META_FN = "meta.meta";
 const std::string TASK_EXT = ".task";
+
+constexpr int STREAM_SIZE = 256;
 
 class File {
 private:
     //task meta data
     std::vector<std::vector<std::string>> taskMetaData;
     std::string META_DIR;//meta file directory
+
+    //general file functions
+    //--------------------------------------------------------------------------
+    std::vector<std::string> file2vect(const std::string &filename);
+    void vect2file (const std::string &filename,
+        const std::vector<std::string> &buffer,
+        const bool append);
 public:
     File(){ };
 
     //general file functions
+    //--------------------------------------------------------------------------
     const bool exists(const std::string &fileName);
     const bool exists(const std::string &fileName,
                       const std::string &directory);
@@ -34,24 +47,26 @@ public:
     const bool destroy(const std::string &fileName);
     const bool destroy(const std::string &fileName,
                        const std::string &directory);
-    void wipe(void);//deletes all files created by the program //TODO
-    void set_META_DIR(std::string dir){META_DIR = dir;};
+    void wipe();//deletes all files created by the program //TODO
+    void set_META_DIR(const std::string dir){META_DIR = dir;};
 
     //functions applicable to the task meta file ".meta"
     //--------------------------------------------------------------------------
-    const bool mf_exists(void){return exists(META_FN, META_DIR);}
+    const bool mf_exists(){return exists(META_FN, META_DIR);}
     const bool mf_create(); //create a new task meta file template
-    void mf_app_tasks(std::vector<std::vector<std::string> >tasks);
-    void mf_app_tasks(std::vector<std::string> tasks);
+    const bool mf_destroy();//deletes the meta file
         //append new tasks and their respective categories to the task meta file
-    const bool mf_del_tasks(std::vector<std::string> tasks);
-    const bool mf_add_cats(std::string task,
-        std::vector<std::string> categories);
-        //add categories to task meta file
-    const bool mf_del_cats(std::vector<std::string> categories);
-        //delete categories from task meta file
-    const bool mf_wipe(void);//deletes the meta file
-    std::vector<std::vector<std::string> > mf_load_all();
+
+    void mf_delete_tasks(const std::vector<std::string> &tasks);//TODO
+        //deletes specified tasks and all associated categories
+    void mf_delete_categories(const std::vector<std::string> &categories,
+        const std::vector<std::string> tasks);
+        //deletes specified categories from specified tasks
+
+    void mf_write(std::vector<std::string> tasks,
+        const std::vector<std::string> &categories, const bool overwrite);
+
+    const std::vector<std::vector<std::string> > mf_load_all();//TODO
         //load all relevant data from task meta file
 
     //functions applicable to the task files ".task"

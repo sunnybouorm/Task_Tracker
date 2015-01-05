@@ -13,7 +13,7 @@
 template<class T> Node_Manager<T>::Node_Manager(void){
     lnkmgr_ = &empty_lnkmgr;
     T empty_object;
-    std::string name = "";
+    const std::string name = "";
     Nodes.insert(std::pair<std::string,T>(name,empty_object));
 };
 
@@ -21,7 +21,7 @@ template<class T> Node_Manager<T>::Node_Manager(Link_Manager& lnkmgr){
     lnkmgr_ = &lnkmgr;
     lnkmgr_ = &empty_lnkmgr;
     T empty_object;
-    std::string name = "";
+    const std::string name = "";
     Nodes.insert(std::pair<std::string,T>(name,empty_object));
 };
 
@@ -113,7 +113,7 @@ template <typename T>
 void Node_Manager<T>::wipe(const std::string &name)
 {
     if(name.empty() == false){
-        auto it = Nodes.find(name);
+        const auto it = Nodes.find(name);
         if(it != Nodes.end()){//does not proceed if name not found
             T &node = it->second;
             std::vector<uint16_t> LIDs = node.get_LIDs();

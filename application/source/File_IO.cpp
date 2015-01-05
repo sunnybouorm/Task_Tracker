@@ -2,11 +2,12 @@
  * Date Created : 18/12/2014
  * Author       : Sultan Bou Orm
  */
+
 #include <iostream>
-#include <fstream>
 
 #include "File_IO.h"
 #include "DEBUG.h"
+#include "OS.h"
 
 using namespace std;
 
@@ -90,6 +91,36 @@ const bool File::destroy(const std::string &fileName,
     return destroy(s);
 }
 
+/* dump file into a vector<string> delimited by '\n' (removes '\n') */
+vector<string> File::file2vect(const string &filename){
+    std::fstream fs;
+    fs.open(filename, fstream::in);
+    vector<string> buffer;
+    string line;
+    while( getline(fs,line) ){
+        buffer.push_back(line);
+    }
+    fs.close();
+    return buffer;
+};
+
+/* dump vector<string> into a file adding '\n' after each element
+ * if append = true, data is appended to the end of file
+ * if append = false, the file is overwritten and truncated
+ */
+void File::vect2file (const string &filename, const vector<string> &buffer,
+    const bool append=false)
+{
+    //dump modified buffer into meta file
+    fstream fs;
+    if(append==false){fs.open(filename, fstream::out | fstream::trunc);}
+    else{fs.open(filename, fstream::out | fstream::app);}
+    for(auto line : buffer){
+        fs << line << endl;
+    }
+    fs.close();
+}
+
 //general file functions(Public)
 //------------------------------------------------------------------------------
 void wipe(void){
@@ -102,11 +133,11 @@ void wipe(void){
  * task meta file format:
  *--------------------------------------------
  * <file start>
- * All categories: <cat1>,<cat2>,...,<catn>\n
+ * All categories: <cat1>,<cat2>,...,<catn>,\n
  * Task name: <task1>\n
- * Categories: <cat1>,<cat2>,...,<catn>\n
+ * Categories: <cat1>,<cat2>,...,<catn>,\n
  * Task name: <task2>\n
- * Categories: <cat1>,<cat2>,...,<catn>\n
+ * Categories: <cat1>,<cat2>,...,<catn>,\n
  * etc...
  * <end of file>
  *--------------------------------------------
@@ -136,61 +167,179 @@ const bool File::mf_create(){
     }
 };
 
-/* tm_add_tasks:
- * appends new tasks to the task meta file, and returns <0=pass>,<1=fail>
- * valid input formats:
- * >(1) a vector of vectors containing strings, the first element of each
- * vector would contain the task, the rest contain categories that belong to
- * their respective task.
- * { <task1,cat1,cat2,...catn>, <task2,cat1,cat2,...catn>,...}
- * >(2) a vector of strings where all elements are tasks with no associated
- * categories to be added.
- *
- * NOTES:
- * > This function is not secure, it does not check if the file is in use.
- * So be wary of any potential race conditions.
- * > Be wary of duplicates, this method does not check for prexisting tasks,
- * hence this method is only suitable for adding NEW tasks, it is NOT suitable
- * for the modification of predefined tasks.
+/*
+ * deletes the meta file and returns <0=pass> <1=fail>
  */
+const bool File::mf_destroy(){
+    return destroy(META_DIR + META_FN);
+};
 
-void File::mf_app_tasks(vector<vector<string> > tasks){
-    if (tasks.empty() == false ){
-        ofstream fs;
-        fs.open(META_DIR + META_FN, ofstream::out | ofstream::app);
-        for(auto vect : tasks){
-            //skip to next vector if task name empty
-            if(vect.begin() != vect.end()){
-                //fetch task name followed by associated categories
-                for(auto it = vect.begin(); it != vect.end(); ++it){
-                    if(it == vect.begin()){
-                        fs << "Task name: " << *it << endl;
-                        fs << "Categories: ";
-                        if(vect.begin() == (vect.end()-1) ){
-                            fs << endl;//newline since no categories detected
-                        }
-                    } else if( (it->empty() ) == false ) {
-                        fs << *it;
-                        if(it != (vect.end()-1) ){
-                            fs << ",";
-                        } else {
-                            fs << endl;
-                        }
-                    }
+/*
+ * Removes specified tasks and their associated categories
+ * (excluding the "All categories: " section) from the meta file.
+ * NOTES:
+ * > The user must ensure the meta file format is adhered
+ */
+void File::mf_delete_tasks(const std::vector<std::string> &tasks)
+{
+    if( tasks.empty() == false ) {
+        //dump meta file into buffer
+        vector<string> buffer = file2vect(META_DIR+META_FN);
+        std::fstream fs;
+        fs.open(META_DIR+META_FN, fstream::in);
+
+        //delete each specified task found and associated categories
+        size_t pos;
+        for(auto line=buffer.begin(); line!=buffer.end();++line){
+            for(auto task : tasks){
+                pos = line->find("Task name: " + task);
+                if(pos!=string::npos){
+                    //erase task lines and associated category lines
+                    buffer.erase(line,line+2);
+                    --line;
                 }
             }
         }
         fs.close();
+
+        //dump modified buffer into meta file (overwrites existing file)
+        vect2file(META_DIR+META_FN,buffer);
+
     }
 };
 
-void File::mf_app_tasks(vector<string> tasks){
-    vector<vector<string>> dvect;//double vector
-    vector<string> temp_buff;
-    for(auto task : tasks){
-        temp_buff.push_back(task);
-        dvect.push_back(temp_buff);
-        temp_buff.pop_back();
+/*
+ * Removes specified categories belonging to the specified tasks
+ * (excluding the "All categories: " section) from the meta file unless no tasks
+ * are provided, in which case all specified categories in the file
+ * (including the "All categories: " section) are removed from the metafile.
+ * NOTES:
+ * > The user must ensure the meta file format is adhered
+ */
+void File::mf_delete_categories(const std::vector<std::string> &categories,
+    const std::vector<std::string> tasks={})
+{
+    bool remAllCat = false;//signals the removal of all categories
+    if(tasks.empty() == true){
+        remAllCat = true;
     }
-    mf_app_tasks(dvect);
+    if( categories.empty() == false ) {
+        //dump meta file into buffer
+        vector<string> buffer = file2vect(META_DIR+META_FN);
+        std::fstream fs;
+        fs.open(META_DIR+META_FN, fstream::in);
+
+        //delete each specified Category found under specified tasks unless
+        //tasks is empty
+        size_t pos,pos1,pos2,pos3;
+        bool harvest = false;//signals to allow category deletion
+        for(auto line=buffer.begin(); line!=buffer.end();++line){
+            pos1 = line->find("All categories: ");
+            pos2 = line->find("Task name: ");
+            pos3 = line->find("Categories: ");
+
+            //search for categories under specified tasks granted tasks is not
+            //empty, otherwise delete all specified categories in the file
+            if( (pos2!=string::npos) && (remAllCat==false) ){
+                for(auto task : tasks){
+                    if(line->find(task)!=string::npos){harvest = true;}
+                }
+            } else if( ( (pos1!=string::npos) || (pos3!=string::npos) ) &&
+                ((harvest==true) || (remAllCat==true)) )
+            {
+                for(auto category : categories){
+                    //find matching category
+                    pos = line->find(category);
+                    if(pos != string::npos){
+                        //erase matching category and associated delimiter
+                        line->erase(pos, category.size() + 1 );
+                    }
+                }
+                harvest = false;
+            }
+        }
+        fs.close();
+
+        //dump modified buffer into meta file (overwrites existing file)
+        vect2file(META_DIR+META_FN,buffer);
+    }
 };
+
+/*
+ * Writes task and category data to meta file based on specified tasks and
+ * categories. If overwrite parameter is passed as true the categories for an
+ * existing tasks are overwritten. When overwrite is false any new categories
+ * for an existing task are appended to the end of the line with the delimiter.
+ * If a task does not exist then task data and associated categories are
+ * appended to the end of the file following the meta file format.
+ * NOTES:
+ * > the user must ensure that the meta file format is adhered before using this
+ * function
+ */
+void File::mf_write(std::vector<std::string> tasks,
+        const std::vector<std::string> &categories, const bool overwrite=false)
+{
+    //dump meta file into buffer1
+    vector<string> buffer1 = file2vect(META_DIR+META_FN);
+    vector<string> buffer2;//used to push_back data to buffer 1 to avoid
+                           //invalidating the iterator
+    std::fstream fs;
+    fs.open(META_DIR+META_FN, fstream::in);
+
+    //locate tasks and categories
+    size_t pos1,pos2;
+    string temp;
+    for(auto line=buffer1.begin(); line!=buffer1.end();++line){
+        pos1 = line->find("All categories: ");
+        pos2 = line->find("Task name: ");
+        //check if on task name label
+        if(pos2!=string::npos){
+            for (auto task=tasks.begin(); task!=tasks.end(); ++task){
+                //check if a specified task exists
+                if( line->find(*task) != string::npos){
+                    ++line;//move to "Categories: " label
+                    tasks.erase(task);//task is no longer a candidate
+                    --task;//decrement iterator to make its position valid
+                    if(overwrite == false){
+                        for(auto category : categories){
+                            if(line->find(category)==string::npos){
+                                line->append(category + ",");
+                            }
+                        }
+                    } else { //rewrite categories for task
+                        line->erase(12,line->size());
+                        for(auto category : categories){
+                            line->append(category + ",");
+                        }
+                    }
+                }
+            }
+        } else if(pos1!=string::npos){
+            //check if categories exists and append new categories
+            for(auto category : categories){
+                if (line->find(category) == string::npos){
+                    line->append(category + ",");
+                }
+            }
+        }
+    }
+
+    //append new task and associated categories
+    for(auto task : tasks){
+        temp  = "Task Name: " + task;
+        buffer2.push_back(temp);
+
+        temp = "Categories: ";
+        for(auto category : categories){
+            temp += category + ",";
+        }
+        buffer2.push_back(temp);
+    }
+    buffer1.insert( buffer1.end(), buffer2.begin(), buffer2.end() );
+
+    fs.close();
+
+    //dump modified buffer into meta file (overwriting existing file)
+    vect2file(META_DIR+META_FN,buffer1);
+
+}
