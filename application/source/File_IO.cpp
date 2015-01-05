@@ -217,7 +217,7 @@ void File::mf_delete_tasks(const std::vector<std::string> &tasks)
  * > The user must ensure the meta file format is adhered
  */
 void File::mf_delete_categories(const std::vector<std::string> &categories,
-    const std::vector<std::string> tasks={})
+    const std::vector<std::string> tasks/*={}*/)
 {
     bool remAllCat = false;//signals the removal of all categories
     if(tasks.empty() == true){
@@ -276,8 +276,9 @@ void File::mf_delete_categories(const std::vector<std::string> &categories,
  * > the user must ensure that the meta file format is adhered before using this
  * function
  */
-void File::mf_write(std::vector<std::string> tasks,
-        const std::vector<std::string> &categories, const bool overwrite=false)
+void File::mf_write(vector<string> tasks,
+        const vector<string> categories/*={}*/,
+        const bool overwrite/*=false*/)
 {
     //dump meta file into buffer1
     vector<string> buffer1 = file2vect(META_DIR+META_FN);
@@ -326,7 +327,7 @@ void File::mf_write(std::vector<std::string> tasks,
 
     //append new task and associated categories
     for(auto task : tasks){
-        temp  = "Task Name: " + task;
+        temp  = "Task name: " + task;
         buffer2.push_back(temp);
 
         temp = "Categories: ";

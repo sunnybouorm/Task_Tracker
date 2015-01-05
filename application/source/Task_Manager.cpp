@@ -5,7 +5,7 @@ using namespace std;
 #include "Task_Manager.h"
 
 void Task_Manager::print(){
-    cout << "printing Task names from map..." << endl;
+    cout << "Printing task names from map..." << endl;
     if(Nodes.empty()){
         cout << "<empty>" << endl;
     } else {

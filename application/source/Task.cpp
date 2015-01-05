@@ -9,8 +9,8 @@ using namespace std;
 //member functions
 
 void Task::print(){
-    cout << "printing task data..." << endl;
-    cout << "Task Name: <" << name << ">" << endl;
+    cout << "Printing task data..." << endl;
+    cout << "Task name: <" << name << ">" << endl;
     cout << "Task LIDs(size=" << LIDs.size() << "):";
     if(LIDs.empty()){
             cout << " <empty>"<< endl;

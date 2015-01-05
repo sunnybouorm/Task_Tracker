@@ -37,7 +37,7 @@ Link::Link(Task *tp, Category *cp, const uint16_t &IDval) {
  * > don't forget to add nodeTypes when creating a new Link Constructor
  */
 void Link::print(void){
-    cout << "printing Link object data..." << endl;
+    cout << "printing link object data..." << endl;
     cout << "LID = <" << LID << ">" << endl;
     cout << "<type1,type2> : <" << nodeTypes.first << "," << nodeTypes.second
          << ">" << endl;

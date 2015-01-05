@@ -41,56 +41,115 @@ SCENARIO("tasks and categories are added/removed from the meta file")
         std::string dir2 = "\\Task_Tracker\\application\\Program files\\";
         std::string dir  = dir1 + dir2;
         file.set_META_DIR(dir);
+        std::string META_DIR = file.get_META_DIR();
         REQUIRE(file.mf_create() == 0);
+        std::vector<std::string> matchBuff;
+        std::vector<std::string> fileBuff;
+        std::vector<std::string> tasks;
+        std::vector<std::string> categories;
+        bool overwrite;
+        std::string str;
+
         WHEN("A task with no categories is added")
         {
-            //TODO
+            matchBuff.clear();
+            matchBuff.push_back("All categories: ");
+            matchBuff.push_back("Task name: task1");
+            matchBuff.push_back("Categories: ");
+            tasks = {"task1"};
+            file.mf_write(tasks);
+            fileBuff = file.file2vect(META_DIR+META_FN);
+            REQUIRE(fileBuff==matchBuff);
+
             AND_WHEN("A new task with no categories is added")
             {
-                //TODO
+                matchBuff.push_back("Task name: task2");
+                matchBuff.push_back("Categories: ");
+                tasks = {"task2"};
+                file.mf_write(tasks);
+                fileBuff = file.file2vect(META_DIR+META_FN);
+                REQUIRE(fileBuff==matchBuff);
+
                 //delete the meta file after use
                 file.mf_destroy();
             }
         }
         GIVEN("A task with a category")
         {
-            //TODO
-            WHEN("A task with the same name is ADDDED")
+            matchBuff.clear();
+            matchBuff.push_back("All categories: category1,");
+            matchBuff.push_back("Task name: task1");
+            matchBuff.push_back("Categories: category1,");
+            tasks = {"task1"};
+            categories = {"category1"};
+            overwrite = false;
+            file.mf_write(tasks,categories,overwrite);
+            fileBuff = file.file2vect(META_DIR+META_FN);
+            REQUIRE(fileBuff==matchBuff);
+
+            WHEN("A task with the same name is written with overwrite=false")
             {
-                //TODO
+                matchBuff.clear();
+                matchBuff.push_back("All categories: category1,category2,");
+                matchBuff.push_back("Task name: task1");
+                matchBuff.push_back("Categories: category1,category2,");
+                tasks = {"task1"};
+                categories = {"category2"};
+                overwrite = false;
+                file.mf_write(tasks,categories,overwrite);
+
                 THEN("The additional categories will be added to the task")
                 {
-                    //TODO
+                    fileBuff = file.file2vect(META_DIR+META_FN);
+                    REQUIRE(fileBuff==matchBuff);
                 }
                 //delete the meta file after use
                 file.mf_destroy();
             }
-            WHEN("A task with the same name is WRITTEN")
+            WHEN("A task with the same name is written with overwrite=true")
             {
-                //TODO
+                matchBuff.clear();
+                matchBuff.push_back("All categories: category1,category2,");
+                matchBuff.push_back("Task name: task1");
+                matchBuff.push_back("Categories: category2,");
+                tasks = {"task1"};
+                categories = {"category2"};
+                overwrite = true;
+                file.mf_write(tasks,categories,overwrite);
                 THEN("The task will be overwritten")
                 {
-                    //TODO
+                    fileBuff = file.file2vect(META_DIR+META_FN);
+                    REQUIRE(fileBuff==matchBuff);
                 }
                 //delete the meta file after use
                 file.mf_destroy();
             }
-            WHEN("The specified task is deleted")
+            WHEN("A specific task is deleted")
             {
-                //TODO
+                matchBuff.clear();
+                matchBuff.push_back("All categories: category1,");
+                tasks = {"task1"};
+                file.mf_delete_tasks(tasks);
                 THEN("The task must not exist in the meta file")
                 {
-                    //TODO
+                    fileBuff = file.file2vect(META_DIR+META_FN);
+                    REQUIRE(fileBuff==matchBuff);
                 }
                 //delete the meta file after use
                 file.mf_destroy();
             }
-            WHEN("The specified category is deleted")
+            WHEN("A specific category is deleted")
             {
-                //TODO
+                matchBuff.clear();
+                matchBuff.push_back("All categories: ");
+                matchBuff.push_back("Task name: task1");
+                matchBuff.push_back("Categories: ");
+                categories = {"category1"};
+                file.mf_delete_categories(categories);
                 THEN("The category must not exist in the meta file")
                 {
-                    //TODO
+                    fileBuff = file.file2vect(META_DIR+META_FN);
+                    REQUIRE(fileBuff==matchBuff);
                 }
                 //delete the meta file after use
                 file.mf_destroy();
@@ -101,23 +160,66 @@ SCENARIO("tasks and categories are added/removed from the meta file")
 
         GIVEN("Multiple tasks with multiple categories in the meta file")
         {
-            //TODO
-            WHEN("A specific Category is deleted from all tasks")
+            matchBuff.clear();
+            str = "All categories: category1,category2,category3,";
+            matchBuff.push_back(str);
+            matchBuff.push_back("Task name: task1");
+            str = "Categories: category1,category2,category3,";
+            matchBuff.push_back(str);
+            matchBuff.push_back("Task name: task2");
+            matchBuff.push_back(str);
+            matchBuff.push_back("Task name: task3");
+            matchBuff.push_back(str);
+            tasks = {"task1","task2","task3"};
+            categories = {"category1","category2","category3"};
+            overwrite = false;
+            file.mf_write(tasks,categories,overwrite);
+            fileBuff = file.file2vect(META_DIR+META_FN);
+            REQUIRE(fileBuff==matchBuff);
+
+            WHEN("A category is deleted from all tasks")
             {
                 //TODO
+                matchBuff.clear();
+                str = "All categories: category1,category3,";
+                matchBuff.push_back(str);
+                matchBuff.push_back("Task name: task1");
+                str = "Categories: category1,category3,";
+                matchBuff.push_back(str);
+                matchBuff.push_back("Task name: task2");
+                matchBuff.push_back(str);
+                matchBuff.push_back("Task name: task3");
+                matchBuff.push_back(str);
+                categories = {"category2"};
+                file.mf_delete_categories(categories);
+
                 THEN("The category must not exist in the metafile")
                 {
-                    //TODO
+                    fileBuff = file.file2vect(META_DIR+META_FN);
+                    REQUIRE(fileBuff==matchBuff);
                 }
                 //delete the meta file after use
                 file.mf_destroy();
             }
-            WHEN("A specific Category is deleted from specific tasks")
+            WHEN("Specific Categories are deleted from specific tasks")
             {
-                //TODO
-                THEN("The category must not exist in the specified tasks")
+                matchBuff.clear();
+                str = "All categories: category1,category2,category3,";
+                matchBuff.push_back(str);
+                matchBuff.push_back("Task name: task1");
+                matchBuff.push_back("Categories: category2,");
+                matchBuff.push_back("Task name: task2");
+                str = "Categories: category1,category2,category3,";
+                matchBuff.push_back(str);
+                matchBuff.push_back("Task name: task3");
+                matchBuff.push_back("Categories: category2,");
+                tasks = {"task1","task3"};
+                categories = {"category3","category1"};
+                file.mf_delete_categories(categories,tasks);
+                THEN("The categories must not exist in the specified tasks")
                 {
-                    //TODO
+                    fileBuff = file.file2vect(META_DIR+META_FN);
+                    REQUIRE(fileBuff==matchBuff);
                 }
                 //delete the meta file after use
                 file.mf_destroy();

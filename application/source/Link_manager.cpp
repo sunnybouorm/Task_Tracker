@@ -134,7 +134,7 @@ void Link_Manager::destroy(const std::vector<uint16_t> LIDs){
 };
 
 void Link_Manager::print(void){
-    cout << "printing Link IDs from map..." << endl;
+    cout << "printing link IDs from map..." << endl;
     if(Links.empty()){
         cout << "<empty>" << endl;
     } else {

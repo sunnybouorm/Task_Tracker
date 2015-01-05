@@ -9,8 +9,8 @@ using namespace std;
 //member functions
 
 void Category::print(){
-    cout << "printing Category data..." << endl;
-    cout << "Category Name: <" << name << ">" << endl;
+    cout << "Printing category data..." << endl;
+    cout << "Category name: <" << name << ">" << endl;
     cout << "Category LIDs(size=" << LIDs.size() << "):";
     if(LIDs.empty()){
             cout << " <empty>"<<endl;

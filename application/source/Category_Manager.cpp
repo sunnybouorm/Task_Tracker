@@ -5,7 +5,7 @@ using namespace std;
 #include "Category_Manager.h"
 
 void Category_Manager::print(){
-    cout << "printing Category names from map..." << endl;
+    cout << "Printing category names from map..." << endl;
     if(Nodes.empty()){
         cout << "<empty>" << endl;
     } else {

@@ -29,7 +29,6 @@ private:
 
     //general file functions
     //--------------------------------------------------------------------------
-    std::vector<std::string> file2vect(const std::string &filename);
     void vect2file (const std::string &filename,
         const std::vector<std::string> &buffer,
         const bool append);
@@ -49,6 +48,8 @@ public:
                        const std::string &directory);
     void wipe();//deletes all files created by the program //TODO
     void set_META_DIR(const std::string dir){META_DIR = dir;};
+    std::string get_META_DIR(){return META_DIR;};
+    std::vector<std::string> file2vect(const std::string &filename);
 
     //functions applicable to the task meta file ".meta"
     //--------------------------------------------------------------------------
@@ -60,11 +61,12 @@ public:
     void mf_delete_tasks(const std::vector<std::string> &tasks);//TODO
         //deletes specified tasks and all associated categories
     void mf_delete_categories(const std::vector<std::string> &categories,
-        const std::vector<std::string> tasks);
+        const std::vector<std::string> tasks={});
         //deletes specified categories from specified tasks
 
     void mf_write(std::vector<std::string> tasks,
-        const std::vector<std::string> &categories, const bool overwrite);
+        const std::vector<std::string> categories={},
+        const bool overwrite=false);
 
     const std::vector<std::vector<std::string> > mf_load_all();//TODO
         //load all relevant data from task meta file
