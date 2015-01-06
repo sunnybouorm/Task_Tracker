@@ -36,9 +36,8 @@ SCENARIO("tasks and categories are added/removed from the meta file","[fileIO]")
         Task_Manager tskmgr;
         Category_Manager ctgmgr;
         File file;
-        std::string dir1 = "C:\\Users\\Sunny\\Documents\\codeblocks";
-        std::string dir2 = "\\Task_Tracker\\application\\Program files\\";
-        std::string dir  = dir1 + dir2;
+        std::string dir = "C:\\Users\\Sunny\\Documents\\codeblocks";
+        dir += "\\Task_Tracker\\application\\Program files\\";
         file.set_META_DIR(dir);
         std::string META_DIR = file.get_META_DIR();
         REQUIRE(file.mf_create() == 0);
@@ -224,6 +223,77 @@ SCENARIO("tasks and categories are added/removed from the meta file","[fileIO]")
                 file.mf_destroy();
             }
         }
+    }
+}
+
+SCENARIO("tasks and categories are mapped from the meta file","[fileIO]")
+{
+    GIVEN("A meta file")
+    {
+        File file;
+        std::string dir = "C:\\Users\\Sunny\\Documents\\codeblocks";
+        dir += "\\Task_Tracker\\application\\Program files\\";
+        file.set_META_DIR(dir);
+        file.mf_create();
+        std::map<std::string, std::vector<std::string> > metaMap;
+        std::vector<std::string> svect;
+
+        WHEN("A meta file with a task is created")
+        {
+            std::vector<std::string> tasks = {"task1"};
+            file.mf_write(tasks);
+            AND_WHEN("The meta file is mapped");
+            {
+                metaMap = file.mf_map();
+                THEN("The data must be valid")
+                {
+                    REQUIRE(metaMap["allCat"].empty() == true );
+                    svect = {"task1"};
+                    REQUIRE(metaMap["allTsk"] ==  svect);
+                    svect = {};
+                    REQUIRE(metaMap["task1"] ==  svect);
+                }
+            }
+            AND_WHEN("Another task is added and the meta file is remapped")
+            {
+                std::vector<std::string> tasks = {"task2"};
+                file.mf_write(tasks);
+                metaMap = file.mf_map();
+                THEN("The data must be valid")
+                {
+                    REQUIRE(metaMap["allCat"].empty() == true );
+                    svect = {"task1","task2"};
+                    REQUIRE(metaMap["allTsk"] ==  svect);
+                    svect = {};
+                    REQUIRE(metaMap["task1"]  ==  svect);
+                    svect = {};
+                    REQUIRE(metaMap["task2"]  ==  svect);
+                }
+            }
+            AND_WHEN("tasks with categories are added and meta file is remapped")
+            {
+                std::vector<std::string> tasks = {"task1","task2","task3"};
+                std::vector<std::string> categories = {"category1","category2",
+                    "category3"};
+                file.mf_write(tasks,categories);
+                metaMap = file.mf_map();
+                THEN("The data must be valid")
+                {
+                    svect = categories;
+                    REQUIRE(metaMap["allCat"] == svect );
+                    svect = tasks;
+                    REQUIRE(metaMap["allTsk"] ==  svect);
+                    svect = categories;
+                    REQUIRE(metaMap["task1"]  ==  svect);
+                    svect = categories;
+                    REQUIRE(metaMap["task2"]  ==  svect);
+                    svect = categories;
+                    REQUIRE(metaMap["task3"]  ==  svect);
+                }
+            }
+        }
+        //delete meta file when done
+        file.mf_destroy();
     }
 }
 

@@ -47,6 +47,8 @@ bool Core::clock_Off(void){
         if (difftime(clockOffTimeStamp, clockOnTimeStamp) >= MIN_RECORD_TIME )
         {
             status = 0;
+//            string str1 = gmtime();
+//            vector<pair<string,string> > timeStamp (str1,str2);
             //record data in task file
             //TODO:
         };

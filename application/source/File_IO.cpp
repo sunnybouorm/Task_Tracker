@@ -86,7 +86,11 @@ const bool File::destroy(const std::string &fileName,
     return destroy(s);
 }
 
-/* dump file into a vector<string> delimited by '\n' (removes '\n') */
+/*
+ * Dump file into a vector<string> delimited by '\n' (removes '\n')
+ * WARNING!!:
+ * User must ensure that the appropriate file extension is supplied
+ */
 vector<string> File::file2vect(const string &filename){
     std::fstream fs;
     fs.open(filename, fstream::in);
@@ -99,7 +103,7 @@ vector<string> File::file2vect(const string &filename){
     return buffer;
 };
 
-std::vector<std::string> File::file2vect(const std::string &filename,
+vector<string> File::file2vect(const std::string &filename,
         const std::string &directory)
 {
     return file2vect(directory+filename);
@@ -343,6 +347,70 @@ void File::mf_write(vector<string> tasks,
     //dump modified buffer into meta file (overwriting existing file)
     vect2file(META_DIR+META_FN,buffer1);
 
+}
+
+/*
+ * Utility function used to parse a string of comma seperated values and
+ * return the split elements as a vector of strings
+ */
+vector<string> File::parse_CSV(string line, vector<string> svect/*={}*/ ){
+    string str;
+    string buff;
+    for(auto c : line){
+        if(c!=','){
+            buff.push_back(c);
+        } else {
+            svect.push_back(buff);
+            buff.clear();
+        }
+    }
+    return svect;
+}
+
+/*
+ * Maps all relevant data from meta file
+ * map keys:
+ * key(literal)  = "allCat" contains all category names
+ * key(literal)  = "allTsk" contains all task names
+ * key(variable) = taskName contains all categories linked to taskName specified
+ */
+map<string, vector<string> > File::mf_map(){
+    map<string, vector<string> > metaMap;
+    metaMap["allCat"];
+    metaMap["allTsk"];
+    ifstream mf;//meta file
+    if(mf_exists() == true){
+        mf.open(META_DIR+META_FN);
+        string line;
+        string buff;
+        string taskName;
+        vector<string> svect;
+        vector<string> taskNames;
+
+        while(getline(mf,line) ) {
+
+            if( line.find("All categories: ")!=string::npos ) {
+                line.erase(0,16);//erase the label
+                svect = parse_CSV(line);
+                metaMap["allCat"] = svect;
+            } else if(line.find("Task name: ")!=string::npos) {
+                //store task names to map to "allTsk" when done iterating
+                svect.clear();
+                taskName = line.substr(11);
+                taskNames.push_back(taskName);
+            } else if(line.find("Categories: ")!=string::npos) {
+                line.erase(0,12);//erase the label
+                svect.clear();
+                svect = parse_CSV(line);
+                    //append all categories associated with added task
+                metaMap[taskName] = svect;
+            }
+        }
+        //map all task names acquired from the meta file to "allTsk"
+        metaMap["allTsk"] = taskNames;
+        mf.close();
+    }
+    return metaMap;
 }
 
 //task file functions

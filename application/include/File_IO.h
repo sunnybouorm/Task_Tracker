@@ -21,7 +21,6 @@ const std::string TASK_EXT = ".task";
 class File {
 private:
     //task meta data
-    std::vector<std::vector<std::string>> taskMetaData;
     std::string META_DIR;//meta file directory
     std::string TASK_DIR;//task file directory
 
@@ -30,6 +29,12 @@ private:
     void vect2file (const std::string &filename,
         const std::vector<std::string> &buffer,
         const bool append);
+
+    //Utility functions
+    //--------------------------------------------------------------------------
+    std::vector<std::string> parse_CSV(std::string line,
+        std::vector<std::string> svect={} );
+        //parses comma seperated values into a vector
 public:
     File(){ };
 
@@ -58,7 +63,7 @@ public:
     const bool mf_destroy();//deletes the meta file
         //append new tasks and their respective categories to the task meta file
 
-    void mf_delete_tasks(const std::vector<std::string> &tasks);//TODO
+    void mf_delete_tasks(const std::vector<std::string> &tasks);
         //deletes specified tasks and all associated categories
     void mf_delete_categories(const std::vector<std::string> &categories,
         const std::vector<std::string> tasks={});
@@ -68,8 +73,8 @@ public:
         const std::vector<std::string> categories={},
         const bool overwrite=false);
 
-    const std::vector<std::vector<std::string> > mf_load_all();//TODO
-        //load all relevant data from task meta file
+    std::map<std::string, std::vector<std::string> > mf_map();
+        //map all relevant data from meta file
 
     //functions applicable to the task files ".task"
     //--------------------------------------------------------------------------
