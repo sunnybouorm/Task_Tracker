@@ -10,9 +10,9 @@ SCENARIO( "Categories can be created and deleted", "[category]" )
     {
         Category_Manager ctgmgr;
         ctgmgr.add("SCHOOL");
-        CHECK(ctgmgr.is_Exist("SCHOOL") == true);
+        REQUIRE(ctgmgr.is_Exist("SCHOOL") == true);
         ctgmgr.add("HOBBY");
-        CHECK(ctgmgr.is_Exist("HOBBY") == true);
+        REQUIRE(ctgmgr.is_Exist("HOBBY") == true);
 
         GIVEN("An empty category")
         {
@@ -94,8 +94,8 @@ SCENARIO("Multiple categories can be created and deleted","[category]")
                 }
                 THEN("The reserved object is retained")
                 {
-                    CHECK( ctgmgr.get_names().size() == 1 );
-                    CHECK( ctgmgr.is_Exist(""));
+                    REQUIRE( ctgmgr.get_names().size() == 1 );
+                    REQUIRE( ctgmgr.is_Exist(""));
                 }
             }
         WHEN("All categories are wiped by name")

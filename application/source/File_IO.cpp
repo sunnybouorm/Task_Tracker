@@ -11,12 +11,7 @@
 
 using namespace std;
 
-//constructors
-
-// member functions
-//==============================================================================
-
-//general file functions(Private)
+//general file functions
 //------------------------------------------------------------------------------
 const bool File::exists (const string &fileName){
     fstream file;
@@ -104,6 +99,12 @@ vector<string> File::file2vect(const string &filename){
     return buffer;
 };
 
+std::vector<std::string> File::file2vect(const std::string &filename,
+        const std::string &directory)
+{
+    return file2vect(directory+filename);
+}
+
 /* dump vector<string> into a file adding '\n' after each element
  * if append = true, data is appended to the end of file
  * if append = false, the file is overwritten and truncated
@@ -121,12 +122,6 @@ void File::vect2file (const string &filename, const vector<string> &buffer,
     fs.close();
 }
 
-//general file functions(Public)
-//------------------------------------------------------------------------------
-void wipe(void){
-    //TODO
-};
-
 //meta file functions
 //------------------------------------------------------------------------------
 /*
@@ -138,9 +133,14 @@ void wipe(void){
  * Categories: <cat1>,<cat2>,...,<catn>,\n
  * Task name: <task2>\n
  * Categories: <cat1>,<cat2>,...,<catn>,\n
- * etc...
+ * <etc...>
  * <end of file>
  *--------------------------------------------
+ * > Notes:
+ * "<" and ">" are used to indicate an element and are not included in the file
+ * <file start> and <end of file> and <etc...> are tags and not included in file
+ * The meta file is essentially a text file used to save program data so that
+ * the program's state can be recovered after quitting the application.
  */
 
 /* mf_create:
@@ -343,4 +343,86 @@ void File::mf_write(vector<string> tasks,
     //dump modified buffer into meta file (overwriting existing file)
     vect2file(META_DIR+META_FN,buffer1);
 
+}
+
+//task file functions
+//------------------------------------------------------------------------------
+/*
+ * task meta file format:
+ *--------------------------------------------
+ * <file start>
+ * <clockOnTime1> & <clockOffTime1>\n
+ * <clockOnTime2> & <clockOffTime2>\n
+ * <clockOnTime3> & <clockOffTime3>\n
+ * <etc...>
+ * <end of file>
+ *--------------------------------------------
+ * clockOnTime and clockOffTime format: "DD MM YYYY HH:MM:SS"
+ * example: "02 27 1990 01:02:03"
+ * > Notes:
+ * Clock on/off times are stored as global time (UTC)
+ * "<" and ">" are used to indicate an element and are not included in the file
+ * <file start> and <end of file> and <etc...> are tags and not included in file
+ * The task file is essentially a text file used to save program data so that
+ * the program's state can be recovered after quitting the application.
+ */
+
+/*
+ * Checks if task file in TASK_DIR exists and returns
+ * true if the file exists and false otherwise
+ */
+bool File::tf_exists(const std::string &filename){
+    return exists(filename+TASK_EXT, TASK_DIR);
+};
+
+void File::tf_create(const string &filename){
+    create(filename+TASK_EXT,TASK_DIR);
+};
+
+void File::tf_destroy(const string &filename){
+    destroy(filename+TASK_EXT,TASK_DIR);
+};
+
+/*
+ * appends clock on and clock off data intervals in appropriate task file format
+ */
+void File::tf_write(const string &filename,
+    const vector<pair<string,string> > &timeStamps)
+{
+    fstream tf;//task file
+    tf.open(TASK_DIR+filename+TASK_EXT,fstream::out | fstream::trunc);
+    for(auto timeStamp : timeStamps) {
+        tf << timeStamp.first << " & " << timeStamp.second << endl;
+    }
+    tf.close();
+};
+
+
+/*
+ * Extracts all time stamp data from the specified task file and returns
+ * the data in a vector in the following format:
+ * {<pair 1>,<pair 2>,..,<pair n>}
+ * where each pair contains : (<clockOnTime>,<clockOffTime>)
+ * NOTES:
+ * > The user must ensure that the .task file format is adhered prior to using
+ * this function
+ */
+vector<pair<string,string> > File::tf_extract(const string &filename)
+{
+    vector<pair<string,string> > data;
+    ifstream tf;//task file
+    tf.open(TASK_DIR+filename+TASK_EXT);
+
+    string line;
+    pair<string,string> timeStamps;
+    while(getline(tf,line) ) {
+        //split string into pairs using " & " as a delimiter
+        size_t pos = line.find("&");
+        timeStamps.first = line.substr(0,pos-1);//clockOnTime
+        timeStamps.second = line.substr(pos+2);//clockOffTime
+        data.push_back(timeStamps);
+    }
+
+    tf.close();
+    return data;
 }

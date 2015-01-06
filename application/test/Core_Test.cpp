@@ -49,11 +49,11 @@ SCENARIO("A task is clocked and unclocked","[core]")
             }
             AND_WHEN("minimum record time is NOT satisfied")
             {
-                CHECK( core.clock_Off() == 1);
+                REQUIRE( core.clock_Off() == 1);
                 THEN("the active task is set to the empty task")
                 {
                     _tsk = core.get_Active_Task();
-                    CHECK( _tsk->is_Empty() == true );
+                    REQUIRE( _tsk->is_Empty() == true );
                 }
             }
             AND_WHEN("the minimum record time IS satisfied")
@@ -61,7 +61,7 @@ SCENARIO("A task is clocked and unclocked","[core]")
                 #ifdef ALLOW_SLEEP_DELAYS
                 _tsk = tskmgr.fetch("Task 1");
                 wait_sec(MIN_RECORD_TIME);
-                CHECK( core.clock_Off() == 0);
+                REQUIRE( core.clock_Off() == 0);
                 #endif // ALLOW_SLEEP_DELAYS
             }
         }

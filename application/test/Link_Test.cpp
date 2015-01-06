@@ -238,9 +238,9 @@ SCENARIO("multiple links are created and destroyed by reference to their object(
             _tsks = tskmgr.fetch(names);
             names = {"C1","C2","C3","C4"};
             _ctgs = ctgmgr.fetch(names);
-            CHECK (lnkmgr.is_Linked(_tsks,_ctgs) == false);
-            CHECK(lnkmgr.link(_tsks,_ctgs)== 0);
-            CHECK (lnkmgr.is_Linked(_tsks,_ctgs) == true);
+            REQUIRE (lnkmgr.is_Linked(_tsks,_ctgs) == false);
+            REQUIRE(lnkmgr.link(_tsks,_ctgs)== 0);
+            REQUIRE (lnkmgr.is_Linked(_tsks,_ctgs) == true);
             AND_WHEN("T2 is unlinked from all categories")
             {
                 names = {"T2"};
@@ -249,7 +249,7 @@ SCENARIO("multiple links are created and destroyed by reference to their object(
                 _ctgs = ctgmgr.fetch(names);
                 _tsk = tskmgr.fetch("T2");
                 lnkmgr.unlink<Task>(_tsk);
-                CHECK(lnkmgr.is_Linked(_tsks,_ctgs) == false);
+                REQUIRE(lnkmgr.is_Linked(_tsks,_ctgs) == false);
             }
         }
 

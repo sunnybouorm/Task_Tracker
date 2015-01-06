@@ -95,8 +95,8 @@ SCENARIO("Multiple tasks can be created and deleted","[task]")
                 }
                 THEN("The reserved object is retained")
                 {
-                    CHECK( tskmgr.get_names().size() == 1 );
-                    CHECK( tskmgr.is_Exist(""));
+                    REQUIRE( tskmgr.get_names().size() == 1 );
+                    REQUIRE( tskmgr.is_Exist(""));
                 }
             }
         WHEN("All tasks are wiped by name")

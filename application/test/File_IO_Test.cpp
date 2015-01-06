@@ -11,14 +11,13 @@
 #include "Category_Manager.h"
 
 
-SCENARIO("A meta file is created and destroyed")
+SCENARIO("A meta file is created and destroyed","[fileIO]")
 {
     GIVEN("an initialised set of data")
     {
         File file;
-        std::string dir1 = "C:\\Users\\Sunny\\Documents\\codeblocks";
-        std::string dir2 = "\\Task_Tracker\\application\\Program files\\";
-        std::string dir  = dir1 + dir2;
+        std::string dir = "C:\\Users\\Sunny\\Documents\\codeblocks";
+        dir += "\\Task_Tracker\\application\\Program files\\";
         file.set_META_DIR(dir);
         REQUIRE(file.mf_create() == 0);
         REQUIRE(file.mf_exists() == true);
@@ -30,7 +29,7 @@ SCENARIO("A meta file is created and destroyed")
     }
 }
 
-SCENARIO("tasks and categories are added/removed from the meta file")
+SCENARIO("tasks and categories are added/removed from the meta file","[fileIO]")
 {
     GIVEN("A meta file category manager and task manager")
     {
@@ -224,6 +223,81 @@ SCENARIO("tasks and categories are added/removed from the meta file")
                 //delete the meta file after use
                 file.mf_destroy();
             }
+        }
+    }
+}
+
+SCENARIO("A .task file is created and deleted","[fileIO]")
+{
+    GIVEN("An initialized File class object")
+    {
+        File file;
+        std::string dir = "C:\\Users\\Sunny\\Documents\\codeblocks";
+        dir += "\\Task_Tracker\\application\\Program files\\task files\\";
+        file.set_TASK_DIR(dir);
+        WHEN("A task file is created")
+        {
+            file.tf_create("task1");
+            THEN("The task file must exist")
+            {
+                REQUIRE( file.tf_exists("task1") == true );
+            }
+            AND_WHEN("The task file is deleted")
+            {
+                file.tf_destroy("task1");
+                THEN("The task file must not exist")
+                {
+                    REQUIRE( file.tf_exists("task1") == false );
+                }
+            }
+        }
+    }
+}
+
+SCENARIO("Timestamps are appended to a .task file and extracted","[fileIO]")
+{
+    GIVEN("An initialized File class object")
+    {
+        File file;
+        std::string dir = "C:\\Users\\Sunny\\Documents\\codeblocks";
+        dir += "\\Task_Tracker\\application\\Program files\\task files\\";
+        file.set_TASK_DIR(dir);
+        std::string filename = "task1";
+        std::string TASK_DIR = file.get_TASK_DIR();
+        file.tf_create(filename);
+        std::vector<std::string> matchBuff;
+        std::vector<std::string> fileBuff;
+
+        WHEN("Data is appeneded to a task file")
+        {
+            std::vector<std::pair<std::string,std::string> > timeStamps;
+            std::string ts1 = "06 01 2015 16:42:00";
+            std::string ts2 = "06 01 2015 17:42:00";
+            std::pair<std::string,std::string> timeStamp (ts1,ts2);
+            timeStamps.push_back(timeStamp);
+            timeStamp.first  = "07 01 2015 10:42:00";
+            timeStamp.second = "07 01 2015 12:42:00";
+            timeStamps.push_back(timeStamp);
+            file.tf_write(filename,timeStamps);
+            THEN("That data must exist in the task file")
+            {
+                matchBuff.clear();
+                matchBuff.push_back("06 01 2015 16:42:00 & 06 01 2015 17:42:00");
+                matchBuff.push_back("07 01 2015 10:42:00 & 07 01 2015 12:42:00");
+                fileBuff = file.file2vect(filename+TASK_EXT, TASK_DIR);
+                REQUIRE(fileBuff == matchBuff);
+            }
+            AND_WHEN("Data is extracted from the file")
+            {
+                std::vector<std::pair<std::string,std::string> > data;
+                data = file.tf_extract(filename);
+                THEN("The data must be valid")
+                {
+                    REQUIRE(data == timeStamps);
+                }
+            }
+            //delete task file when done
+            file.tf_destroy(filename);
         }
     }
 }
