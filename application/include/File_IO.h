@@ -32,7 +32,7 @@ private:
 
     //Utility functions
     //--------------------------------------------------------------------------
-    std::vector<std::string> parse_CSV(std::string line,
+    std::vector<std::string> parse_CSV(const std::string &line,
         std::vector<std::string> svect={} );
         //parses comma seperated values into a vector
 public:
@@ -69,9 +69,14 @@ public:
         const std::vector<std::string> tasks={});
         //deletes specified categories from specified tasks
 
-    void mf_write(std::vector<std::string> tasks,
+    void mf_write(const std::string &task,
         const std::vector<std::string> categories={},
         const bool overwrite=false);
+        //writes specified tasks and categories to meta file
+
+    void mf_write_categories(const std::vector<std::string> &categories,
+        const bool overwrite=false);
+        //writes categories to the "All categories: " label in meta file
 
     std::map<std::string, std::vector<std::string> > mf_map();
         //map all relevant data from meta file

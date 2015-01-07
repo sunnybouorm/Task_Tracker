@@ -66,6 +66,16 @@ bool Link_Manager::is_Linked(vector<Task*> tps, vector<Category*> cps){
     return true;//all specified objects are linked
 };
 
+Link* Link_Manager::get_link(const uint16_t &LID){
+    Link* _link;
+    if( Links.count(LID) != 0 ){
+        _link = &Links.at(LID);
+    } else {
+        _link = &Links[0];//point to reserved LID to indicate no LIDs found
+    }
+    return _link;
+};
+
 /*
  * Creates a link between a task and a category object.
  * returns bool <0=pass>, <1=fail>

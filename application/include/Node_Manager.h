@@ -47,7 +47,6 @@ public :
     const std::vector<T*> fetch(
         const std::vector<std::string> &names);
     void attach_Link_Manager(Link_Manager& lnkmgr);
-
 };
 
 #include "Node_Manager.hxx"

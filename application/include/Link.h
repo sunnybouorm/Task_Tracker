@@ -21,8 +21,11 @@ private :
     std::pair<std::string, std::string> nodeTypes;
     Link(Task *tp, Category *cp, const uint16_t &IDval);
     void set_LID(uint16_t &val){LID=val;};
-    uint16_t get_LID(void){return LID;};
     void print(void);
+public:
+    Link(){LID=0;};
+    uint16_t get_LID(void){return LID;};
+    std::pair<Task*, Category*> get_pair() {return nodes;};
 };
 
 #endif // LINK_H

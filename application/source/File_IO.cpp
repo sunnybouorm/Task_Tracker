@@ -11,6 +11,24 @@
 
 using namespace std;
 
+/*
+ * Utility function used to parse a string of comma seperated values and
+ * return the split elements as a vector of strings
+ */
+vector<string> File::parse_CSV(const string &line, vector<string> svect/*={}*/ ){
+    string str;
+    string buff;
+    for(auto c : line){
+        if(c!=','){
+            buff.push_back(c);
+        } else {
+            svect.push_back(buff);
+            buff.clear();
+        }
+    }
+    return svect;
+}
+
 //general file functions
 //------------------------------------------------------------------------------
 const bool File::exists (const string &fileName){
@@ -270,9 +288,9 @@ void File::mf_delete_categories(const std::vector<std::string> &categories,
 };
 
 /*
- * Writes task and category data to meta file based on specified tasks and
- * categories. If overwrite parameter is passed as true the categories for an
- * existing tasks are overwritten. When overwrite is false any new categories
+ * Writes task and category data to meta file based on the specified task and
+ * categories. If overwrite parameter is passed as true the categories of an
+ * existing task are overwritten. When overwrite is false any new categories
  * for an existing task are appended to the end of the line with the delimiter.
  * If a task does not exist then task data and associated categories are
  * appended to the end of the file following the meta file format.
@@ -280,18 +298,15 @@ void File::mf_delete_categories(const std::vector<std::string> &categories,
  * > the user must ensure that the meta file format is adhered before using this
  * function
  */
-void File::mf_write(vector<string> tasks,
-        const vector<string> categories/*={}*/,
-        const bool overwrite/*=false*/)
+void File::mf_write(const string &task,
+    const vector<string> categories/*={}*/,
+    const bool overwrite/*=false*/)
 {
+    bool append = true;//flag indicating whether the task exists in meta file
     //dump meta file into buffer1
     vector<string> buffer1 = file2vect(META_DIR+META_FN);
-    vector<string> buffer2;//used to push_back data to buffer 1 to avoid
-                           //invalidating the iterator
-    std::fstream fs;
-    fs.open(META_DIR+META_FN, fstream::in);
 
-    //locate tasks and categories
+    //locate task and categories
     size_t pos1,pos2;
     string temp;
     for(auto line=buffer1.begin(); line!=buffer1.end();++line){
@@ -299,23 +314,20 @@ void File::mf_write(vector<string> tasks,
         pos2 = line->find("Task name: ");
         //check if on task name label
         if(pos2!=string::npos){
-            for (auto task=tasks.begin(); task!=tasks.end(); ++task){
-                //check if a specified task exists
-                if( line->find(*task) != string::npos){
-                    ++line;//move to "Categories: " label
-                    tasks.erase(task);//task is no longer a candidate
-                    --task;//decrement iterator to make its position valid
-                    if(overwrite == false){
-                        for(auto category : categories){
-                            if(line->find(category)==string::npos){
-                                line->append(category + ",");
-                            }
-                        }
-                    } else { //rewrite categories for task
-                        line->erase(12,line->size());
-                        for(auto category : categories){
+            //check if specified task exists
+            if( line->find(task) != string::npos){
+                append = false;
+                ++line;//move to "Categories: " label
+                if(overwrite == false){
+                    for(auto category : categories){
+                        if(line->find(category)==string::npos){
                             line->append(category + ",");
                         }
+                    }
+                } else { //rewrite categories for task
+                    line->erase(12,line->size());
+                    for(auto category : categories){
+                        line->append(category + ",");
                     }
                 }
             }
@@ -329,20 +341,17 @@ void File::mf_write(vector<string> tasks,
         }
     }
 
-    //append new task and associated categories
-    for(auto task : tasks){
+    if(append == true){
+        //append new task and associated categories
         temp  = "Task name: " + task;
-        buffer2.push_back(temp);
+        buffer1.push_back(temp);
 
         temp = "Categories: ";
         for(auto category : categories){
             temp += category + ",";
         }
-        buffer2.push_back(temp);
+        buffer1.push_back(temp);
     }
-    buffer1.insert( buffer1.end(), buffer2.begin(), buffer2.end() );
-
-    fs.close();
 
     //dump modified buffer into meta file (overwriting existing file)
     vect2file(META_DIR+META_FN,buffer1);
@@ -350,22 +359,44 @@ void File::mf_write(vector<string> tasks,
 }
 
 /*
- * Utility function used to parse a string of comma seperated values and
- * return the split elements as a vector of strings
+ * Writes category data to meta file's all categories label. If overwrite
+ * parameter is passed as false then new categories are appended to the all
+ * categories label. When overwrite is true the all categories label
+ * is overwritten
+ * NOTES:
+ * > the user must ensure that the meta file format is adhered before prior to
+ * using this function
  */
-vector<string> File::parse_CSV(string line, vector<string> svect/*={}*/ ){
-    string str;
-    string buff;
-    for(auto c : line){
-        if(c!=','){
-            buff.push_back(c);
-        } else {
-            svect.push_back(buff);
-            buff.clear();
+void File::mf_write_categories(const std::vector<std::string> &categories,
+    const bool overwrite/*=false*/)
+{
+    //dump meta file into buffer1
+    vector<string> buffer1 = file2vect(META_DIR+META_FN);
+
+    //modify contents in "All categories: "
+    if(overwrite == false){
+        //append non existant categories
+        for(auto category : categories){
+            if( ( buffer1.begin() )->find(category) == string::npos){
+                ( buffer1.begin() )->append(category + ",");
+            }
+        }
+    } else{
+        string line = "All categories: ";
+        for(auto category : categories){
+            if(category.empty() == false){
+                line += category + ",";
+            }
+        }
+        buffer1.insert(buffer1.begin(),line);
+        if(buffer1.size() > 1){
+            buffer1.erase(buffer1.begin()+1);
         }
     }
-    return svect;
-}
+
+    //dump modified buffer into meta file (overwriting existing file)
+    vect2file(META_DIR+META_FN,buffer1);
+};
 
 /*
  * Maps all relevant data from meta file
@@ -425,8 +456,8 @@ map<string, vector<string> > File::mf_map(){
  * <etc...>
  * <end of file>
  *--------------------------------------------
- * clockOnTime and clockOffTime format: "DD MM YYYY HH:MM:SS"
- * example: "02 27 1990 01:02:03"
+ * clockOnTime and clockOffTime format: "DD/MM/YYYY HH:MM:SS" 24 hour
+ * example: "02/27/1990 01:02:03"
  * > Notes:
  * Clock on/off times are stored as global time (UTC)
  * "<" and ">" are used to indicate an element and are not included in the file
@@ -458,13 +489,12 @@ void File::tf_write(const string &filename,
     const vector<pair<string,string> > &timeStamps)
 {
     fstream tf;//task file
-    tf.open(TASK_DIR+filename+TASK_EXT,fstream::out | fstream::trunc);
+    tf.open(TASK_DIR+filename+TASK_EXT,fstream::out | fstream::app);
     for(auto timeStamp : timeStamps) {
         tf << timeStamp.first << " & " << timeStamp.second << endl;
     }
     tf.close();
 };
-
 
 /*
  * Extracts all time stamp data from the specified task file and returns

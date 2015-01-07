@@ -8,6 +8,4 @@
 #ifndef TEST_CASE_DEBUG_FILE_H
 #define TEST_CASE_DEBUG_FILE_H
 
-//#define ALLOW_SLEEP_DELAYS;
-
 #endif // TEST_CASE_DEBUG_FILE_H

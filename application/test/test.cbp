@@ -60,6 +60,7 @@
 		<Unit filename="../source/Task_Manager.cpp" />
 		<Unit filename="Category_Test.cpp" />
 		<Unit filename="Core_Test.cpp" />
+		<Unit filename="FILE_DIRECTORIES.h" />
 		<Unit filename="File_IO_Test.cpp" />
 		<Unit filename="Link_Test.cpp" />
 		<Unit filename="TEST_CASE_DEBUG_FILE.h" />

@@ -20,6 +20,7 @@ public :
     bool is_Linked(Task &tr, Category &cr);//checks if a link already exists
     bool is_Linked(Task *tp, Category *cp);
     bool is_Linked(std::vector<Task*> tps, std::vector<Category*> cps);
+    Link* get_link(const uint16_t &LID);
     void print(void);
 
     //modifiers

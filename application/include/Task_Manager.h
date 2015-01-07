@@ -26,6 +26,8 @@ public:
 
     //accessors
     //------------------------------------
+    std::vector<std::string> probe(std::string taskName);
+        //grabs the names of all categories linked to taskName
     void print(void);
 };
 
