@@ -31,7 +31,7 @@ vector<string> File::parse_CSV(const string &line, vector<string> svect/*={}*/ )
 
 //general file functions
 //------------------------------------------------------------------------------
-const bool File::exists (const string &fileName){
+bool File::exists (const string &fileName){
     fstream file;
     file.open(fileName, fstream::out | fstream::in);//does not create file
 
@@ -51,13 +51,13 @@ const bool File::exists (const string &fileName){
     }
 }
 
-const bool File::exists (const string &fileName, const string &directory){
+bool File::exists (const string &fileName, const string &directory){
     const string s = directory + fileName;
     return exists(s);
 }
 
 //create a file and return the status as bool : <pass=0>, <fail=1>
-const bool File::create(const string &fileName){
+bool File::create(const string &fileName){
     fstream file;
     file.open(fileName, fstream::out);//creates file
     file.close();
@@ -75,14 +75,14 @@ const bool File::create(const string &fileName){
     }
 }
 
-const bool File::create(const string &fileName, const std::string &directory){
+bool File::create(const string &fileName, const std::string &directory){
     const string s = directory + fileName;
     return create(s);
 }
 
 //deletes file and returns bool status: <0=pass>,<1=fail>
 //note: this function is not secure and may delete the file even if it is in use
-const bool File::destroy(const std::string &fileName){
+bool File::destroy(const std::string &fileName){
     int status = 1;
     const char* cptr = &fileName[0];
     status = remove(cptr);
@@ -98,7 +98,7 @@ const bool File::destroy(const std::string &fileName){
     return status;
 }
 
-const bool File::destroy(const std::string &fileName,
+bool File::destroy(const std::string &fileName,
                         const std::string &directory){
     const string s = directory + fileName;
     return destroy(s);
@@ -173,7 +173,7 @@ void File::vect2file (const string &filename, const vector<string> &buffer,
  * NOTES:
  * only the first line "All categories: " is set when creating a new file
  */
-const bool File::mf_create(){
+bool File::mf_create(){
     fstream fs;
     if(mf_exists()== false){
         //create a fresh task meta file
@@ -192,7 +192,7 @@ const bool File::mf_create(){
 /*
  * deletes the meta file and returns <0=pass> <1=fail>
  */
-const bool File::mf_destroy(){
+bool File::mf_destroy(){
     return destroy(META_DIR + META_FN);
 };
 

@@ -40,14 +40,14 @@ public:
 
     //general file functions
     //--------------------------------------------------------------------------
-    const bool exists(const std::string &fileName);
-    const bool exists(const std::string &fileName,
+    bool exists(const std::string &fileName);
+    bool exists(const std::string &fileName,
                       const std::string &directory);
-    const bool create(const std::string &fileName);
-    const bool create(const std::string &fileName,
+    bool create(const std::string &fileName);
+    bool create(const std::string &fileName,
                       const std::string &directory);
-    const bool destroy(const std::string &fileName);
-    const bool destroy(const std::string &fileName,
+    bool destroy(const std::string &fileName);
+    bool destroy(const std::string &fileName,
                        const std::string &directory);
     std::vector<std::string> file2vect(const std::string &filename);
     std::vector<std::string> file2vect(const std::string &filename,
@@ -58,9 +58,9 @@ public:
     //--------------------------------------------------------------------------
     void set_META_DIR(const std::string &dir){META_DIR = dir;};
     std::string get_META_DIR(){return META_DIR;};
-    const bool mf_exists(){return exists(META_FN, META_DIR);}
-    const bool mf_create(); //create a new task meta file template
-    const bool mf_destroy();//deletes the meta file
+    bool mf_exists(){return exists(META_FN, META_DIR);}
+    bool mf_create(); //create a new task meta file template
+    bool mf_destroy();//deletes the meta file
         //append new tasks and their respective categories to the task meta file
 
     void mf_delete_tasks(const std::vector<std::string> &tasks);

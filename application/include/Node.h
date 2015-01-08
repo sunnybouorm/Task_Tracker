@@ -8,7 +8,7 @@
 #define NODE_H
 
 #include<iostream>
-#include <vector>
+#include<vector>
 
 /*
  * NOTES:
@@ -36,7 +36,7 @@ public :
     std::vector<uint16_t> get_LIDs(void){ return LIDs;};
     bool LID_Exists(uint16_t IDval);//checks if an LID exists in LIDs
     std::string get_name(void){return name;}
-    const bool is_Empty(void){return name.empty();};
+    bool is_Empty(void){return name.empty();};
         //checks whether node has a name
 };
 

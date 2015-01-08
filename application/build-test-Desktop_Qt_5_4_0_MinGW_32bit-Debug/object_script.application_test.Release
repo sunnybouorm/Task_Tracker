@@ -1,0 +1,17 @@
+INPUT(
+./release\main.o
+./release\Category.o
+./release\Category_Manager.o
+./release\Core.o
+./release\File_IO.o
+./release\Link.o
+./release\Link_manager.o
+./release\Node.o
+./release\Task.o
+./release\Task_Manager.o
+./release\Category_Test.o
+./release\Core_Test.o
+./release\File_IO_Test.o
+./release\Link_Test.o
+./release\Task_Test.o
+);

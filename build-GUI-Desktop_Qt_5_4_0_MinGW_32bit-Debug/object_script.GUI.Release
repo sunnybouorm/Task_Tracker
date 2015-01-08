@@ -1,0 +1,14 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\Category.o
+./release\Category_Manager.o
+./release\Core.o
+./release\File_IO.o
+./release\Link.o
+./release\Link_manager.o
+./release\Node.o
+./release\Task.o
+./release\Task_Manager.o
+./release\moc_mainwindow.o
+);

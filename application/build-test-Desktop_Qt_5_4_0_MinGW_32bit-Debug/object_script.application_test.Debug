@@ -1,0 +1,17 @@
+INPUT(
+./debug\main.o
+./debug\Category.o
+./debug\Category_Manager.o
+./debug\Core.o
+./debug\File_IO.o
+./debug\Link.o
+./debug\Link_manager.o
+./debug\Node.o
+./debug\Task.o
+./debug\Task_Manager.o
+./debug\Category_Test.o
+./debug\Core_Test.o
+./debug\File_IO_Test.o
+./debug\Link_Test.o
+./debug\Task_Test.o
+);
