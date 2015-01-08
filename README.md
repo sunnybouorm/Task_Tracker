@@ -8,9 +8,7 @@ This program is meant to aid in time management. The user selects a single task 
 
 Development Tools:
 ===========================
-Compiler: minGW4.9.1 with -std=c++11
-
-GUI Framework: Qt5.4
-
-IDE: Qt Creator
+*Compiler: minGW4.9.1 with -std=c++11
+*GUI Framework: Qt5.4
+*IDE: Qt Creator
 
