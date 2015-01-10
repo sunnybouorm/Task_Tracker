@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     ../application/source/Link_manager.cpp \
     ../application/source/Node.cpp \
     ../application/source/Task.cpp \
-    ../application/source/Task_Manager.cpp
+    ../application/source/Task_Manager.cpp \
+    Task_Setup.cpp
 
 HEADERS  += mainwindow.h \
     ../application/include/Category.h \
@@ -42,6 +43,10 @@ HEADERS  += mainwindow.h \
     ../application/include/Node_Manager.hxx \
     ../application/include/OS.h \
     ../application/include/Task.h \
-    ../application/include/Task_Manager.h
+    ../application/include/Task_Manager.h \
+    Task_Setup.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    Task_Setup.ui
+
+DISTFILES +=

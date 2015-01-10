@@ -19,5 +19,8 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
+    //save program state to meta file
+    core.save_prog_state();
+
     return a.exec();
 }

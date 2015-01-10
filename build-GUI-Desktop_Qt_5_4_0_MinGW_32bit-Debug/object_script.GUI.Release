@@ -10,5 +10,7 @@ INPUT(
 ./release\Node.o
 ./release\Task.o
 ./release\Task_Manager.o
+./release\Task_Setup.o
 ./release\moc_mainwindow.o
+./release\moc_Task_Setup.o
 );

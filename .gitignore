@@ -41,3 +41,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.exe
+application/test/obj/Debug/source/Category.o
+*.o
+application/test/test.layout
