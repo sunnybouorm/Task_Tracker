@@ -11,6 +11,10 @@ INPUT(
 ./debug\Task.o
 ./debug\Task_Manager.o
 ./debug\Task_Setup.o
+./debug\tsd_deleteprompt.o
+./debug\tsd_taskeditdialog.o
 ./debug\moc_mainwindow.o
 ./debug\moc_Task_Setup.o
+./debug\moc_tsd_deleteprompt.o
+./debug\moc_tsd_taskeditdialog.o
 );

@@ -6,47 +6,47 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>658</height>
+    <width>1079</width>
+    <height>670</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Task Tracker</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="main_tabWidget">
     <property name="geometry">
      <rect>
-      <x>-10</x>
+      <x>20</x>
       <y>10</y>
-      <width>1021</width>
-      <height>591</height>
+      <width>991</width>
+      <height>571</height>
      </rect>
     </property>
     <property name="currentIndex">
      <number>0</number>
     </property>
-    <widget class="QWidget" name="tab">
+    <widget class="QWidget" name="taskActivation">
      <attribute name="title">
-      <string>Clocking</string>
+      <string>Run</string>
      </attribute>
-     <widget class="QGroupBox" name="groupBox_2">
+     <widget class="QGroupBox" name="activation_groupBox">
       <property name="geometry">
        <rect>
         <x>40</x>
         <y>10</y>
-        <width>921</width>
-        <height>541</height>
+        <width>911</width>
+        <height>501</height>
        </rect>
       </property>
       <property name="title">
        <string>Task Activation</string>
       </property>
-      <widget class="QLCDNumber" name="lcdNumber">
+      <widget class="QLCDNumber" name="activeTimer_LCD">
        <property name="geometry">
         <rect>
-         <x>150</x>
-         <y>320</y>
+         <x>140</x>
+         <y>260</y>
          <width>601</width>
          <height>211</height>
         </rect>
@@ -61,11 +61,11 @@
         <enum>QLCDNumber::Flat</enum>
        </property>
       </widget>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="activation_pushButton">
        <property name="geometry">
         <rect>
-         <x>220</x>
-         <y>150</y>
+         <x>210</x>
+         <y>100</y>
          <width>451</width>
          <height>151</height>
         </rect>
@@ -81,26 +81,26 @@
        <property name="geometry">
         <rect>
          <x>250</x>
-         <y>50</y>
+         <y>20</y>
          <width>371</width>
          <height>61</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout">
         <item row="0" column="1">
-         <widget class="QComboBox" name="comboBox">
+         <widget class="QComboBox" name="activeTask_comboBox">
           <property name="editable">
            <bool>true</bool>
           </property>
           <property name="currentText">
-           <string>Task Name</string>
+           <string/>
           </property>
          </widget>
         </item>
         <item row="0" column="0">
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="task_label">
           <property name="text">
-           <string>Task</string>
+           <string>Task Name</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -108,16 +108,16 @@
          </widget>
         </item>
         <item row="0" column="2">
-         <widget class="QToolButton" name="toolButton">
+         <widget class="QToolButton" name="task_toolButton">
           <property name="text">
            <string>...</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QLabel" name="label_2">
+         <widget class="QLabel" name="category_label">
           <property name="text">
-           <string>Category</string>
+           <string>Category Filter</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -125,20 +125,18 @@
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QComboBox" name="comboBox_2">
+         <widget class="QComboBox" name="categoryFilter_comboBox">
           <property name="editable">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
           <property name="currentText">
            <string>None</string>
           </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QToolButton" name="toolButton_2">
-          <property name="text">
-           <string>...</string>
-          </property>
+          <item>
+           <property name="text">
+            <string>None</string>
+           </property>
+          </item>
          </widget>
         </item>
        </layout>
@@ -164,10 +162,10 @@
       <widget class="QTabWidget" name="tabWidget_2">
        <property name="geometry">
         <rect>
-         <x>30</x>
+         <x>40</x>
          <y>30</y>
-         <width>531</width>
-         <height>471</height>
+         <width>521</width>
+         <height>331</height>
         </rect>
        </property>
        <property name="currentIndex">
@@ -177,53 +175,6 @@
         <attribute name="title">
          <string>Pie</string>
         </attribute>
-        <widget class="QWidget" name="horizontalLayoutWidget_4">
-         <property name="geometry">
-          <rect>
-           <x>70</x>
-           <y>330</y>
-           <width>401</width>
-           <height>80</height>
-          </rect>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QPushButton" name="pushButton_11">
-            <property name="text">
-             <string>|&lt;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_12">
-            <property name="text">
-             <string>&lt;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_13">
-            <property name="text">
-             <string>refresh</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_14">
-            <property name="text">
-             <string>&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_15">
-            <property name="text">
-             <string>&gt;|</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
         <widget class="QGraphicsView" name="graphicsView">
          <property name="geometry">
           <rect>
@@ -239,58 +190,11 @@
         <attribute name="title">
          <string>Bar</string>
         </attribute>
-        <widget class="QWidget" name="horizontalLayoutWidget_3">
-         <property name="geometry">
-          <rect>
-           <x>60</x>
-           <y>330</y>
-           <width>401</width>
-           <height>80</height>
-          </rect>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <widget class="QPushButton" name="pushButton_6">
-            <property name="text">
-             <string>|&lt;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_7">
-            <property name="text">
-             <string>&lt;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_10">
-            <property name="text">
-             <string>refresh</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_8">
-            <property name="text">
-             <string>&gt;</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton_9">
-            <property name="text">
-             <string>&gt;|</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
         <widget class="QWidget" name="formLayoutWidget">
          <property name="geometry">
           <rect>
-           <x>60</x>
-           <y>280</y>
+           <x>20</x>
+           <y>260</y>
            <width>321</width>
            <height>31</height>
           </rect>
@@ -326,6 +230,53 @@
          </property>
         </widget>
        </widget>
+      </widget>
+      <widget class="QWidget" name="horizontalLayoutWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>110</x>
+         <y>370</y>
+         <width>401</width>
+         <height>80</height>
+        </rect>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QPushButton" name="pushButton_6">
+          <property name="text">
+           <string>|&lt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_7">
+          <property name="text">
+           <string>&lt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_10">
+          <property name="text">
+           <string>refresh</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_8">
+          <property name="text">
+           <string>&gt;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_9">
+          <property name="text">
+           <string>&gt;|</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </widget>
      <widget class="QGroupBox" name="groupBox_4">
@@ -436,6 +387,19 @@
      </widget>
     </widget>
    </widget>
+   <widget class="QLineEdit" name="StatusReporter">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>590</y>
+      <width>601</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -451,7 +415,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1024</width>
+     <width>1079</width>
      <height>21</height>
     </rect>
    </property>
@@ -465,15 +429,22 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="actionTask_and_Category_setup"/>
+    <addaction name="actionTasks"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuSetup">
+    <property name="title">
+     <string>Setup</string>
+    </property>
+    <addaction name="actionAdd_tasks_and_Categories"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menuEdit"/>
+   <addaction name="menuSetup"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionSave">
@@ -486,13 +457,35 @@
     <string>Exit</string>
    </property>
   </action>
-  <action name="actionTask_and_Category_setup">
+  <action name="actionTasks">
    <property name="text">
-    <string>Task and Category setup</string>
+    <string>Tasks</string>
+   </property>
+  </action>
+  <action name="actionAdd_tasks_and_Categories">
+   <property name="text">
+    <string>Tasks and Categories</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>511</x>
+     <y>328</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

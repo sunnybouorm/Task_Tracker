@@ -264,3 +264,33 @@ SCENARIO("Loading program state from a .meta file","[core]")
         core.file.mf_destroy();
     }
 }
+
+SCENARIO("Saving program state without any categories added","[core]")
+{
+    GIVEN("An initialized Core")
+    {
+        Core core;
+        core.file.set_META_DIR(META_DIR);
+        core.tskmgr.add("Task 1");
+        core.tskmgr.add("Task 2");
+
+        WHEN("the program state is saved")
+        {
+            core.save_prog_state();
+            THEN("The saved data must be correct")
+            {
+                std::vector<std::string> matchBuff;
+                matchBuff.push_back("All categories: ");
+                matchBuff.push_back("Task name: Task 1");
+                matchBuff.push_back("Categories: ");
+                matchBuff.push_back("Task name: Task 2");
+                matchBuff.push_back("Categories: ");
+                std::vector<std::string> fileBuff =
+                core.file.file2vect("meta.meta",META_DIR);
+                REQUIRE(fileBuff==matchBuff);
+            }
+        }
+        //delete meta file when done
+        core.file.mf_destroy();
+    }
+}

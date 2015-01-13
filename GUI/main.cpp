@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "Task_Setup.h"
 #include <QApplication>
 
 #include "directories.h"
@@ -16,11 +17,8 @@ int main(int argc, char *argv[])
 
     //setup GUI
     QApplication a(argc, argv);
-    MainWindow w;
+    MainWindow w(core);
     w.show();
-
-    //save program state to meta file
-    core.save_prog_state();
 
     return a.exec();
 }

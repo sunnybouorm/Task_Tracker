@@ -21,8 +21,8 @@ public:
      * object is deleted then create another one in its place. The reserved object
      * must have an empty string as its key, its value must be an empty Task object.
      */
-    Task_Manager() : Node_Manager<Task>() { };
-    Task_Manager(Link_Manager &lnkmgr) : Node_Manager<Task>(lnkmgr) { };
+    Task_Manager() : Node_Manager<Task>() { }
+    Task_Manager(Link_Manager &lnkmgr) : Node_Manager<Task>(lnkmgr) { }
 
     //accessors
     //------------------------------------

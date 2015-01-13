@@ -11,6 +11,10 @@ INPUT(
 ./release\Task.o
 ./release\Task_Manager.o
 ./release\Task_Setup.o
+./release\tsd_deleteprompt.o
+./release\tsd_taskeditdialog.o
 ./release\moc_mainwindow.o
 ./release\moc_Task_Setup.o
+./release\moc_tsd_deleteprompt.o
+./release\moc_tsd_taskeditdialog.o
 );

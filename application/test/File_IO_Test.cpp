@@ -280,7 +280,7 @@ SCENARIO("tasks and categories are mapped from the meta file","[fileIO]")
         {
             std::string task = "task1";
             file.mf_write(task);
-            AND_WHEN("The meta file is mapped");
+            AND_WHEN("The meta file is mapped")
             {
                 metaMap = file.mf_map();
                 THEN("The data must be valid")

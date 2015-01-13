@@ -255,3 +255,54 @@ SCENARIO("multiple links are created and destroyed by reference to their object(
 
     }
 }
+
+SCENARIO("All category names linked to a task can be extracted by probing task","[task]")
+{
+    GIVEN("A set of initialized Link, Task, and Category managers")
+    {
+        Link_Manager lnkmgr;
+        Task_Manager tskmgr;
+        Category_Manager ctgmgr;
+        tskmgr.attach_Link_Manager(lnkmgr);
+        ctgmgr.attach_Link_Manager(lnkmgr);
+        Task *_tsk;
+        Category *_ctg;
+
+        tskmgr.add("Task 1");
+        tskmgr.add("Task 2");
+        ctgmgr.add("Category 1");
+        ctgmgr.add("Category 2");
+        ctgmgr.add("Category 3");
+        Task *_t1;
+        Task *_t2;
+        Category *_c1;
+        Category *_c2;
+        Category *_c3;
+        _t1 = tskmgr.fetch("Task 1");
+        _t2 = tskmgr.fetch("Task 2");
+        _c1 = ctgmgr.fetch("Category 1");
+        _c2 = ctgmgr.fetch("Category 2");
+        _c3 = ctgmgr.fetch("Category 3");
+
+        //Task 1 links to all categories
+        lnkmgr.link( {_t1} , {_c1,_c2,_c3} );
+
+        //Task 2 links to Category 2
+        lnkmgr.link(_t2,_c2);
+
+        WHEN("Task 1 is probed")
+        {
+            std::vector<std::string> match = {"Category 1","Category 2","Category 3"};
+            std::vector<std::string> categoryNames;
+            categoryNames = tskmgr.probe("Task 1");
+            REQUIRE(categoryNames==match);
+        }
+        WHEN("Task 2 is probed")
+        {
+            std::vector<std::string> match = {"Category 2"};
+            std::vector<std::string> categoryNames;
+            categoryNames = tskmgr.probe("Task 2");
+            REQUIRE(categoryNames==match);
+        }
+    }
+}

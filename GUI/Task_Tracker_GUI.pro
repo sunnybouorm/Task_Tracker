@@ -27,7 +27,9 @@ SOURCES += main.cpp\
     ../application/source/Node.cpp \
     ../application/source/Task.cpp \
     ../application/source/Task_Manager.cpp \
-    Task_Setup.cpp
+    Task_Setup.cpp \
+    tsd_deleteprompt.cpp \
+    tsd_taskeditdialog.cpp
 
 HEADERS  += mainwindow.h \
     ../application/include/Category.h \
@@ -44,9 +46,13 @@ HEADERS  += mainwindow.h \
     ../application/include/OS.h \
     ../application/include/Task.h \
     ../application/include/Task_Manager.h \
-    Task_Setup.h
+    Task_Setup.h \
+    tsd_deleteprompt.h \
+    tsd_taskeditdialog.h
 
 FORMS    += mainwindow.ui \
-    Task_Setup.ui
+    Task_Setup.ui \
+    tsd_deleteprompt.ui \
+    tsd_taskeditdialog.ui
 
 DISTFILES +=

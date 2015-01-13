@@ -7,12 +7,11 @@
 using namespace std;
 using std::chrono::system_clock;
 
-
 Core::Core(){
     tskmgr.attach_Link_Manager(lnkmgr);
     ctgmgr.attach_Link_Manager(lnkmgr);
     activeTask = &emptyTask;
-};
+}
 
 /*
  * Converts time_t to UTC using gmtime and returns a string of the specified
@@ -112,11 +111,11 @@ void Core::save_prog_state(){
     tasks = tskmgr.get_names();
     for(auto task : tasks){
         categories = tskmgr.probe(task);
-        if(categories.empty() == false){
+        if(task.empty() == false){
             file.mf_write(task,categories);
         }
     }
-};
+}
 
 /*
  * Loads saved program state from meta file and assigns processed data to the
@@ -145,4 +144,4 @@ void Core::load_prog_state(){
         tps.clear();
         cps.clear();
     }
-};
+}

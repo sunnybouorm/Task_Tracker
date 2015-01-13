@@ -34,7 +34,7 @@ public :
     Core();
 
     //public modifiers
-    void set_MIN_RECORD_TIME(const uint8_t &t){MIN_RECORD_TIME = t;};
+    void set_MIN_RECORD_TIME(const uint8_t &t){MIN_RECORD_TIME = t;}
     bool clock_On(Task *task);//record clock on time of task
     bool clock_Off();//record clock off time of clocked on task
     void save_prog_state();
@@ -42,7 +42,7 @@ public :
 
     //public accessors
     Task* get_Active_Task();
-    uint8_t get_MIN_RECORD_TIME(){return MIN_RECORD_TIME;};
+    uint8_t get_MIN_RECORD_TIME(){return MIN_RECORD_TIME;}
 };
 
 #endif//CORE_H
