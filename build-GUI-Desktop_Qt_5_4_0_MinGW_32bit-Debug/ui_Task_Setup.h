@@ -35,12 +35,13 @@ public:
     QTableWidget *tableWidget;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout_2;
-    QComboBox *taskName_comboBox;
-    QLineEdit *categoryName_lineEdit;
-    QPushButton *addTask_pushButton;
+    QPushButton *task_edit_pushButton;
     QPushButton *addCategory_pushButton;
-    QPushButton *edit_pushButton;
+    QPushButton *addTask_pushButton;
+    QComboBox *taskName_comboBox;
+    QPushButton *category_edit_pushButton;
     QPushButton *deleteSelected_pushButton;
+    QComboBox *categoryName_comboBox;
 
     void setupUi(QDialog *Task_Setup_Dialog)
     {
@@ -72,40 +73,46 @@ public:
         tableWidget->setGeometry(QRect(10, 20, 711, 311));
         gridLayoutWidget = new QWidget(groupBox);
         gridLayoutWidget->setObjectName(QStringLiteral("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(10, 340, 301, 91));
+        gridLayoutWidget->setGeometry(QRect(10, 340, 331, 91));
         gridLayout_2 = new QGridLayout(gridLayoutWidget);
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
-        taskName_comboBox = new QComboBox(gridLayoutWidget);
-        taskName_comboBox->setObjectName(QStringLiteral("taskName_comboBox"));
-        taskName_comboBox->setEditable(true);
+        task_edit_pushButton = new QPushButton(gridLayoutWidget);
+        task_edit_pushButton->setObjectName(QStringLiteral("task_edit_pushButton"));
 
-        gridLayout_2->addWidget(taskName_comboBox, 0, 0, 1, 1);
-
-        categoryName_lineEdit = new QLineEdit(gridLayoutWidget);
-        categoryName_lineEdit->setObjectName(QStringLiteral("categoryName_lineEdit"));
-
-        gridLayout_2->addWidget(categoryName_lineEdit, 1, 0, 1, 1);
-
-        addTask_pushButton = new QPushButton(gridLayoutWidget);
-        addTask_pushButton->setObjectName(QStringLiteral("addTask_pushButton"));
-
-        gridLayout_2->addWidget(addTask_pushButton, 0, 1, 1, 1);
+        gridLayout_2->addWidget(task_edit_pushButton, 0, 2, 1, 1);
 
         addCategory_pushButton = new QPushButton(gridLayoutWidget);
         addCategory_pushButton->setObjectName(QStringLiteral("addCategory_pushButton"));
 
         gridLayout_2->addWidget(addCategory_pushButton, 1, 1, 1, 1);
 
-        edit_pushButton = new QPushButton(gridLayoutWidget);
-        edit_pushButton->setObjectName(QStringLiteral("edit_pushButton"));
+        addTask_pushButton = new QPushButton(gridLayoutWidget);
+        addTask_pushButton->setObjectName(QStringLiteral("addTask_pushButton"));
 
-        gridLayout_2->addWidget(edit_pushButton, 0, 2, 1, 1);
+        gridLayout_2->addWidget(addTask_pushButton, 0, 1, 1, 1);
+
+        taskName_comboBox = new QComboBox(gridLayoutWidget);
+        taskName_comboBox->setObjectName(QStringLiteral("taskName_comboBox"));
+        taskName_comboBox->setEditable(true);
+
+        gridLayout_2->addWidget(taskName_comboBox, 0, 0, 1, 1);
+
+        category_edit_pushButton = new QPushButton(gridLayoutWidget);
+        category_edit_pushButton->setObjectName(QStringLiteral("category_edit_pushButton"));
+
+        gridLayout_2->addWidget(category_edit_pushButton, 1, 2, 1, 1);
 
         deleteSelected_pushButton = new QPushButton(gridLayoutWidget);
         deleteSelected_pushButton->setObjectName(QStringLiteral("deleteSelected_pushButton"));
 
-        gridLayout_2->addWidget(deleteSelected_pushButton, 1, 2, 1, 1);
+        gridLayout_2->addWidget(deleteSelected_pushButton, 2, 0, 1, 1);
+
+        categoryName_comboBox = new QComboBox(gridLayoutWidget);
+        categoryName_comboBox->setObjectName(QStringLiteral("categoryName_comboBox"));
+        categoryName_comboBox->setEditable(true);
+
+        gridLayout_2->addWidget(categoryName_comboBox, 1, 0, 1, 1);
 
 
         retranslateUi(Task_Setup_Dialog);
@@ -121,12 +128,13 @@ public:
         ___qtablewidgetitem->setText(QApplication::translate("Task_Setup_Dialog", "Type", 0));
         QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(2);
         ___qtablewidgetitem1->setText(QApplication::translate("Task_Setup_Dialog", "Hidden", 0));
-        taskName_comboBox->setCurrentText(QApplication::translate("Task_Setup_Dialog", "Task Name", 0));
-        categoryName_lineEdit->setText(QApplication::translate("Task_Setup_Dialog", "Category Name", 0));
-        addTask_pushButton->setText(QApplication::translate("Task_Setup_Dialog", "Add Task", 0));
+        task_edit_pushButton->setText(QApplication::translate("Task_Setup_Dialog", "Edit Task", 0));
         addCategory_pushButton->setText(QApplication::translate("Task_Setup_Dialog", "Add Category", 0));
-        edit_pushButton->setText(QApplication::translate("Task_Setup_Dialog", "Edit", 0));
+        addTask_pushButton->setText(QApplication::translate("Task_Setup_Dialog", "Add Task", 0));
+        taskName_comboBox->setCurrentText(QApplication::translate("Task_Setup_Dialog", "Task Name", 0));
+        category_edit_pushButton->setText(QApplication::translate("Task_Setup_Dialog", "Edit Category", 0));
         deleteSelected_pushButton->setText(QApplication::translate("Task_Setup_Dialog", "Delete Selected", 0));
+        categoryName_comboBox->setCurrentText(QApplication::translate("Task_Setup_Dialog", "Category Name", 0));
     } // retranslateUi
 
 };

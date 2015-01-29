@@ -84,32 +84,15 @@
      <rect>
       <x>10</x>
       <y>340</y>
-      <width>301</width>
+      <width>331</width>
       <height>91</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <widget class="QComboBox" name="taskName_comboBox">
-       <property name="editable">
-        <bool>true</bool>
-       </property>
-       <property name="currentText">
-        <string>Task Name</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLineEdit" name="categoryName_lineEdit">
+     <item row="0" column="2">
+      <widget class="QPushButton" name="task_edit_pushButton">
        <property name="text">
-        <string>Category Name</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="addTask_pushButton">
-       <property name="text">
-        <string>Add Task</string>
+        <string>Edit Task</string>
        </property>
       </widget>
      </item>
@@ -120,17 +103,44 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QPushButton" name="edit_pushButton">
+     <item row="0" column="1">
+      <widget class="QPushButton" name="addTask_pushButton">
        <property name="text">
-        <string>Edit</string>
+        <string>Add Task</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QComboBox" name="taskName_comboBox">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <property name="currentText">
+        <string>Task Name</string>
        </property>
       </widget>
      </item>
      <item row="1" column="2">
+      <widget class="QPushButton" name="category_edit_pushButton">
+       <property name="text">
+        <string>Edit Category</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
       <widget class="QPushButton" name="deleteSelected_pushButton">
        <property name="text">
         <string>Delete Selected</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QComboBox" name="categoryName_comboBox">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <property name="currentText">
+        <string>Category Name</string>
        </property>
       </widget>
      </item>

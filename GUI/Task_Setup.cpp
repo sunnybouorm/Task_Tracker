@@ -29,7 +29,12 @@ void Task_Setup_Dialog::on_addTask_pushButton_clicked()
 void Task_Setup_Dialog::on_addCategory_pushButton_clicked()
 {
     //add category
-    //TODO
+    std::string categoryName;
+    categoryName = categoryName_Qs.toStdString();
+    _core->ctgmgr.add(categoryName);
+
+    //emit signal
+    emit addCategory_pushButton_clicked();
 }
 
 void Task_Setup_Dialog::on_deleteSelected_pushButton_clicked()
@@ -71,10 +76,28 @@ void Task_Setup_Dialog::on_taskName_comboBox_editTextChanged(const QString &arg1
     taskName_Qs = arg1;
 }
 
-void Task_Setup_Dialog::on_edit_pushButton_clicked()
+void Task_Setup_Dialog::on_categoryName_comboBox_activated(const QString &arg1)
 {
-    tsd_ed.setParent(this->window(), Qt::Dialog);
-    tsd_ed.setModal(true);
-    tsd_ed.attachCore(_core);
-    tsd_ed.show();
+    categoryName_Qs = arg1;
+}
+
+void Task_Setup_Dialog::on_categoryName_comboBox_editTextChanged(const QString &arg1)
+{
+    categoryName_Qs = arg1;
+}
+
+void Task_Setup_Dialog::on_task_edit_pushButton_clicked()
+{
+    tsd_ed_tsk.setParent(this->window(), Qt::Dialog);
+    tsd_ed_tsk.setModal(true);
+    tsd_ed_tsk.attachCore(_core);
+    tsd_ed_tsk.show();
+}
+
+void Task_Setup_Dialog::on_category_edit_pushButton_clicked()
+{
+    tsd_ed_cat.setParent(this->window(), Qt::Dialog);
+    tsd_ed_cat.setModal(true);
+    tsd_ed_cat.attachCore(_core);
+    tsd_ed_cat.show();
 }

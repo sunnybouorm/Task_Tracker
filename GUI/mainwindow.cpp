@@ -31,8 +31,8 @@ void MainWindow::init_tsd()
     //setup signal and slot connections
     QObject::connect(&tsd, SIGNAL(addTask_pushButton_clicked()),
                      this, SLOT(updateTasks()) );
-    //categories connection
-    //TODO
+    QObject::connect(&tsd, SIGNAL(addCategory_pushButton_clicked()),
+                     this, SLOT(updateCategories()) );
 }
 
 //Class member functions
@@ -56,6 +56,7 @@ void MainWindow::updateCategories()
 {
     //Load all Categories in application _core to the activeCategory_comboBox
     ui->categoryFilter_comboBox->clear();
+    ui->categoryFilter_comboBox->addItem("None");
     std::vector<std::string> categoryNames = _core->ctgmgr.get_names();
     for(std::string categoryName : categoryNames){
         if(categoryName.empty()==false){

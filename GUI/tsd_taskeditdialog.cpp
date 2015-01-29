@@ -17,7 +17,6 @@ void tsd_taskEditDialog::attachCore(Core *_core){
     this->_core = _core;
 }
 
-
 void tsd_taskEditDialog::on_buttonBox_clicked(QAbstractButton *button)
 {
     QDialogButtonBox::StandardButton stdButton =
@@ -35,7 +34,6 @@ void tsd_taskEditDialog::on_buttonBox_clicked(QAbstractButton *button)
         break;
     }
 }
-
 
 void tsd_taskEditDialog::on_taskNameChange_pushbutton_clicked()
 {

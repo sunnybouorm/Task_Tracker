@@ -44,6 +44,7 @@ public:
     QAction *actionExit;
     QAction *actionTasks;
     QAction *actionAdd_tasks_and_Categories;
+    QAction *actionCategories;
     QWidget *centralWidget;
     QTabWidget *main_tabWidget;
     QWidget *taskActivation;
@@ -109,6 +110,8 @@ public:
         actionTasks->setObjectName(QStringLiteral("actionTasks"));
         actionAdd_tasks_and_Categories = new QAction(MainWindow);
         actionAdd_tasks_and_Categories->setObjectName(QStringLiteral("actionAdd_tasks_and_Categories"));
+        actionCategories = new QAction(MainWindow);
+        actionCategories->setObjectName(QStringLiteral("actionCategories"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         main_tabWidget = new QTabWidget(centralWidget);
@@ -162,7 +165,7 @@ public:
 
         categoryFilter_comboBox = new QComboBox(gridLayoutWidget);
         categoryFilter_comboBox->setObjectName(QStringLiteral("categoryFilter_comboBox"));
-        categoryFilter_comboBox->setEditable(false);
+        categoryFilter_comboBox->setEditable(true);
 
         gridLayout->addWidget(categoryFilter_comboBox, 1, 1, 1, 1);
 
@@ -323,6 +326,7 @@ public:
         menuBar->addAction(menuHelp->menuAction());
         menuFile->addAction(actionExit);
         menuEdit->addAction(actionTasks);
+        menuEdit->addAction(actionCategories);
         menuSetup->addAction(actionAdd_tasks_and_Categories);
 
         retranslateUi(MainWindow);
@@ -342,6 +346,7 @@ public:
         actionExit->setText(QApplication::translate("MainWindow", "Exit", 0));
         actionTasks->setText(QApplication::translate("MainWindow", "Tasks", 0));
         actionAdd_tasks_and_Categories->setText(QApplication::translate("MainWindow", "Tasks and Categories", 0));
+        actionCategories->setText(QApplication::translate("MainWindow", "Categories", 0));
         activation_groupBox->setTitle(QApplication::translate("MainWindow", "Task Activation", 0));
         activation_pushButton->setText(QApplication::translate("MainWindow", "Clock on/off", 0));
         activeTask_comboBox->setCurrentText(QString());

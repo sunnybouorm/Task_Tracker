@@ -127,7 +127,7 @@
         <item row="1" column="1">
          <widget class="QComboBox" name="categoryFilter_comboBox">
           <property name="editable">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="currentText">
            <string>None</string>
@@ -430,6 +430,7 @@
      <string>Edit</string>
     </property>
     <addaction name="actionTasks"/>
+    <addaction name="actionCategories"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -465,6 +466,11 @@
   <action name="actionAdd_tasks_and_Categories">
    <property name="text">
     <string>Tasks and Categories</string>
+   </property>
+  </action>
+  <action name="actionCategories">
+   <property name="text">
+    <string>Categories</string>
    </property>
   </action>
  </widget>

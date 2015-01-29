@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
 #include <QtWidgets/QGridLayout>
@@ -32,8 +33,9 @@ public:
     QLineEdit *lineEdit;
     QWidget *gridLayoutWidget;
     QGridLayout *gridLayout;
-    QLineEdit *lineEdit_2;
     QPushButton *taskNameChange_pushbutton;
+    QLineEdit *lineEdit_2;
+    QCheckBox *checkBox;
 
     void setupUi(QDialog *tsd_taskEditDialog)
     {
@@ -47,14 +49,12 @@ public:
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Apply|QDialogButtonBox::Cancel);
         tableWidget = new QTableWidget(tsd_taskEditDialog);
-        if (tableWidget->columnCount() < 3)
-            tableWidget->setColumnCount(3);
+        if (tableWidget->columnCount() < 2)
+            tableWidget->setColumnCount(2);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         tableWidget->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
         tableWidget->setHorizontalHeaderItem(1, __qtablewidgetitem1);
-        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
-        tableWidget->setHorizontalHeaderItem(2, __qtablewidgetitem2);
         tableWidget->setObjectName(QStringLiteral("tableWidget"));
         tableWidget->setGeometry(QRect(10, 60, 491, 241));
         lineEdit = new QLineEdit(tsd_taskEditDialog);
@@ -66,15 +66,20 @@ public:
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setContentsMargins(0, 0, 0, 0);
-        lineEdit_2 = new QLineEdit(gridLayoutWidget);
-        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
-
-        gridLayout->addWidget(lineEdit_2, 0, 0, 1, 1);
-
         taskNameChange_pushbutton = new QPushButton(gridLayoutWidget);
         taskNameChange_pushbutton->setObjectName(QStringLiteral("taskNameChange_pushbutton"));
 
-        gridLayout->addWidget(taskNameChange_pushbutton, 0, 1, 1, 1);
+        gridLayout->addWidget(taskNameChange_pushbutton, 0, 2, 1, 1);
+
+        lineEdit_2 = new QLineEdit(gridLayoutWidget);
+        lineEdit_2->setObjectName(QStringLiteral("lineEdit_2"));
+
+        gridLayout->addWidget(lineEdit_2, 0, 1, 1, 1);
+
+        checkBox = new QCheckBox(gridLayoutWidget);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+
+        gridLayout->addWidget(checkBox, 0, 0, 1, 1);
 
 
         retranslateUi(tsd_taskEditDialog);
@@ -89,9 +94,12 @@ public:
         tsd_taskEditDialog->setWindowTitle(QApplication::translate("tsd_taskEditDialog", "Edit", 0));
         QTableWidgetItem *___qtablewidgetitem = tableWidget->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QApplication::translate("tsd_taskEditDialog", "Category", 0));
+        QTableWidgetItem *___qtablewidgetitem1 = tableWidget->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QApplication::translate("tsd_taskEditDialog", "Linked", 0));
         lineEdit->setText(QApplication::translate("tsd_taskEditDialog", "Select Relevant Categories", 0));
-        lineEdit_2->setText(QApplication::translate("tsd_taskEditDialog", "Task Name", 0));
         taskNameChange_pushbutton->setText(QApplication::translate("tsd_taskEditDialog", "Change Name", 0));
+        lineEdit_2->setText(QApplication::translate("tsd_taskEditDialog", "Task Name", 0));
+        checkBox->setText(QApplication::translate("tsd_taskEditDialog", "Hide", 0));
     } // retranslateUi
 
 };
