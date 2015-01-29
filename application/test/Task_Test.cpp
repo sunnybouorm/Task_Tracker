@@ -118,3 +118,37 @@ SCENARIO("Multiple tasks can be created and deleted","[task]")
         }
     }
 }
+
+SCENARIO("tasks can be renamed","[task]")
+{
+    GIVEN("A taskmanager with a list of tasks added")
+    {
+        Task_Manager tskmgr;
+        std::vector<std::string> names = {"METH","ENG","MECH","CSSE","INS"};
+
+        tskmgr.add(names);
+        WHEN("Task METH is Changed to MATH")
+        {
+            tskmgr.rename("METH","MATH");
+            bool arg1 = tskmgr.is_Exist("METH")==false;
+            bool arg2 = tskmgr.is_Exist("MATH")==true;
+            REQUIRE( (arg1&&arg2)==true );
+        }
+
+        WHEN("Task ENG is Changed to ENGG")
+        {
+            tskmgr.rename("ENG","ENGG");
+            bool arg1 = tskmgr.is_Exist("ENG")==false;
+            bool arg2 = tskmgr.is_Exist("ENGG")==true;
+            REQUIRE( (arg1&&arg2)==true );
+        }
+
+        WHEN("Task INS is Changed to INFS")
+        {
+            tskmgr.rename("INS","INFS");
+            bool arg1 = tskmgr.is_Exist("INS")==false;
+            bool arg2 = tskmgr.is_Exist("INFS")==true;
+            REQUIRE( (arg1&&arg2)==true );
+        }
+    }
+}

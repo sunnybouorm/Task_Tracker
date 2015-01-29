@@ -306,3 +306,57 @@ SCENARIO("All category names linked to a task can be extracted by probing task",
         }
     }
 }
+
+SCENARIO("Renaming tasks and Categories does not affect assigned LIDs")
+{
+    GIVEN("A set of initialized Link, Task, and Category managers")
+    {
+        Link_Manager lnkmgr;
+        Task_Manager tskmgr;
+        Category_Manager ctgmgr;
+        tskmgr.attach_Link_Manager(lnkmgr);
+        ctgmgr.attach_Link_Manager(lnkmgr);
+        Task *_tsk;
+        Category *_ctg;
+
+        tskmgr.add("Task 1");
+        tskmgr.add("Task 2");
+        ctgmgr.add("Category 1");
+        ctgmgr.add("Category 2");
+        ctgmgr.add("Category 3");
+        Task *_t1;
+        Task *_t2;
+        Category *_c1;
+        Category *_c2;
+        Category *_c3;
+        _t1 = tskmgr.fetch("Task 1");
+        _t2 = tskmgr.fetch("Task 2");
+        _c1 = ctgmgr.fetch("Category 1");
+        _c2 = ctgmgr.fetch("Category 2");
+        _c3 = ctgmgr.fetch("Category 3");
+
+        //Task 1 links to all categories
+        lnkmgr.link( {_t1} , {_c1,_c2,_c3} );
+
+        //Task 2 links to Category 2
+        lnkmgr.link(_t2,_c2);
+
+        WHEN("Task 1 is renamed to TSK 1")
+        {
+            std::vector<uint16_t> LIDs_before = _t1->get_LIDs();
+            tskmgr.rename("Task 1", "TSK 1");
+            Task *_tsk = tskmgr.fetch("TSK 1");
+            std::vector<uint16_t> LIDs_after  = _tsk->get_LIDs();
+            REQUIRE(LIDs_before==LIDs_after);
+        }
+
+        WHEN("Category 1 is renamed to CAT 1")
+        {
+            std::vector<uint16_t> LIDs_before = _c1->get_LIDs();
+            ctgmgr.rename("Category 1", "CAT 1");
+            Category *_ctg = ctgmgr.fetch("CAT 1");
+            std::vector<uint16_t> LIDs_after  = _ctg->get_LIDs();
+            REQUIRE(LIDs_before==LIDs_after);
+        }
+    }
+}

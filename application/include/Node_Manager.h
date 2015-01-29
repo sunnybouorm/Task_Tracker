@@ -43,6 +43,9 @@ public :
     void add(const std::string &name);
     void add(const std::vector<std::string> &names);
 
+    //rename //TODO
+    void rename(const std::string &nodeName, const std::string &newName);
+
     T* fetch(const std::string &name);
     const std::vector<T*> fetch(
         const std::vector<std::string> &names);

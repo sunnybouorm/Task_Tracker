@@ -21,22 +21,27 @@ class Node {
 friend class Task;
 friend class Category;
 friend class Link_Manager;
+
 protected:
     std::string name;
     std::vector<uint16_t> LIDs;
-    Node() { };
+    Node() { }
     Node(const std::string &s);
 
-    void set_name(const std::string &s) { name = s;};
+    //modifiers
     bool add_LID(const uint16_t &IDval);
     void delete_LID(const uint16_t &IDval);
     void delete_LIDs(const std::vector<uint16_t> &IDvals);
     void delete_LIDs(void);
 public :
-    std::vector<uint16_t> get_LIDs(void){ return LIDs;};
+    //modifiers
+    void set_name(const std::string &s) { name = s;}
+
+    //accessors
+    std::vector<uint16_t> get_LIDs(void){ return LIDs;}
     bool LID_Exists(uint16_t IDval);//checks if an LID exists in LIDs
     std::string get_name(void){return name;}
-    bool is_Empty(void){return name.empty();};
+    bool is_Empty(void){return name.empty();}
         //checks whether node has a name
 };
 

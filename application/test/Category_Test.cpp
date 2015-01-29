@@ -117,3 +117,37 @@ SCENARIO("Multiple categories can be created and deleted","[category]")
         }
     }
 }
+
+SCENARIO("Categories can be renamed","[task]")
+{
+    GIVEN("A category manager with a list of categories added")
+    {
+        Category_Manager ctgmgr;
+        std::vector<std::string> names = {"METH","ENG","MECH","CSSE","INS"};
+
+        ctgmgr.add(names);
+        WHEN("Category METH is Changed to MATH")
+        {
+            ctgmgr.rename("METH","MATH");
+            bool arg1 = ctgmgr.is_Exist("METH")==false;
+            bool arg2 = ctgmgr.is_Exist("MATH")==true;
+            REQUIRE( (arg1&&arg2)==true );
+        }
+
+        WHEN("Category ENG is Changed to ENGG")
+        {
+            ctgmgr.rename("ENG","ENGG");
+            bool arg1 = ctgmgr.is_Exist("ENG")==false;
+            bool arg2 = ctgmgr.is_Exist("ENGG")==true;
+            REQUIRE( (arg1&&arg2)==true );
+        }
+
+        WHEN("Category INS is Changed to INFS")
+        {
+            ctgmgr.rename("INS","INFS");
+            bool arg1 = ctgmgr.is_Exist("INS")==false;
+            bool arg2 = ctgmgr.is_Exist("INFS")==true;
+            REQUIRE( (arg1&&arg2)==true );
+        }
+    }
+}

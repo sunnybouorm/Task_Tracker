@@ -15,7 +15,7 @@ template<class T> Node_Manager<T>::Node_Manager(void){
     T empty_object;
     const std::string name = "";
     Nodes.insert(std::pair<std::string,T>(name,empty_object));
-};
+}
 
 template<class T> Node_Manager<T>::Node_Manager(Link_Manager& lnkmgr){
     lnkmgr_ = &lnkmgr;
@@ -23,14 +23,14 @@ template<class T> Node_Manager<T>::Node_Manager(Link_Manager& lnkmgr){
     T empty_object;
     const std::string name = "";
     Nodes.insert(std::pair<std::string,T>(name,empty_object));
-};
+}
 
 /*
  * Attaches a Link_Manager class to this instance of Node_Manager
  */
 template<class T> void Node_Manager<T>::attach_Link_Manager(Link_Manager& lnkmgr){
     lnkmgr_ = &lnkmgr;
-};
+}
 
 /*
  * fetches a pointer to a <T> object with matching name, if no such object
@@ -46,7 +46,7 @@ T* Node_Manager<T>::fetch(const std::string &name)
         ptr = &(Nodes[""]);//point to reserved empty object
     };
     return ptr;
-};
+}
 
 /*
  * Fetches <T> objects associated with matching names, names that do not
@@ -67,7 +67,7 @@ const std::vector<T*> Node_Manager<T>::fetch(
         solution.push_back(fetch(name));
     }
     return solution;
-};
+}
 
 /*
  * Gets the names of the objects of type <T> refered to in the vector nodes.
@@ -83,7 +83,7 @@ std::vector<std::string> Node_Manager<T>::get_names(const std::vector<T*> &nodes
         names.push_back(node->get_name());
     }
     return names;
-};
+}
 
 /*
  * Gets the names of all <T> objects in this instance of Node_Manager.
@@ -101,7 +101,7 @@ std::vector<std::string> Node_Manager<T>::get_names(void)
         names.push_back(node.first);
     }
     return names;
-};
+}
 
 /*
  * wipe() removes objects from the map "Nodes" and any associated links based on
@@ -124,8 +124,8 @@ void Node_Manager<T>::wipe(const std::string &name)
             node.delete_LIDs();
             Nodes.erase(name);
         }
-    };
-};
+    }
+}
 
 template <typename T>
 void Node_Manager<T>::wipe(const std::vector<std::string> &names)
@@ -133,7 +133,7 @@ void Node_Manager<T>::wipe(const std::vector<std::string> &names)
     for(auto& name : names){
         wipe(name);
     };
-};
+}
 
 template <typename T>
 void Node_Manager<T>::wipe(void)
@@ -145,7 +145,7 @@ void Node_Manager<T>::wipe(void)
         names.push_back(name);
     }
     wipe(names);
-};
+}
 
 /*
  * Adds a single category to the map Nodes, granted that name is
@@ -163,7 +163,7 @@ void Node_Manager<T>::add(const std::string &name)
         T node(name);
         Nodes.insert(std::pair<std::string,T>(name,node));
     }
-};
+}
 
 template <typename T>
 void Node_Manager<T>::add(const std::vector<std::string> &names)
@@ -171,7 +171,7 @@ void Node_Manager<T>::add(const std::vector<std::string> &names)
     for(auto e : names){
         add(e);
     }
-};
+}
 
 /*
  * NOTES:
@@ -184,7 +184,7 @@ template <typename T>
 bool Node_Manager<T>::is_Exist(const std::string &name)
 {
     return Nodes.count(name);
-};
+}
 
 template <typename T>
 bool Node_Manager<T>::is_Exist(const std::vector<std::string> &names)
@@ -192,9 +192,20 @@ bool Node_Manager<T>::is_Exist(const std::vector<std::string> &names)
     for(auto name : names){
         if(is_Exist(name) == false){
             return false;
-        };
+        }
     }
     return true;
-};
+}
+
+template <typename T>
+void Node_Manager<T>::rename(const std::string &nodeName, const std::string &newName) {
+    //fetch and clone node
+    T node = *fetch(nodeName);
+    //rename Node
+    node.set_name(newName);
+    //reassign node to map
+    Nodes.erase(nodeName);
+    Nodes[newName] = node;
+}
 
 #endif // NODE_MANAGER_HXX

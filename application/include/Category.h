@@ -16,9 +16,9 @@ class Category : public Node {
 friend class Category_Manager;
 template<class Category> friend class Node_Manager;
 private :
-    Category(const std::string &s) : Node(s) { };
+    Category(const std::string &s) : Node(s) { }
 public :
-    Category() : Node() { };
+    Category() : Node() { }
     void print(void);
 };
 
